@@ -3,4 +3,7 @@
 
 namespace icarus_lib
 {
+    song::song(const int id) : id(id)
+    {
+    }
 }
