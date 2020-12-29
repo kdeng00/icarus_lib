@@ -18,6 +18,7 @@ namespace icarus_lib
 
     using token = models::token<std::string, int>;
     using login_result = models::login_result<std::string, int>;
+    using register_result = models::register_result<std::string>;
     using user = models::user<std::string, int>;
     using pass_sec = models::pass_sec<std::string, int>;
     

@@ -12,6 +12,7 @@ namespace icarus_lib::models
     class song
     {
     public:
+        song() = default;
         song(const int_val id) : id(id)
         {
         }
@@ -134,6 +135,21 @@ namespace icarus_lib::models
     template<typename str_val>
     class register_result {
     public:
+        register_result() = default;
+        register_result(const str_val &username, bool registered,
+                        const str_val &message) : 
+                            username(username), registered(registered),
+                            message(message)
+        {
+        }
+        register_result(str_val &&username, bool registered,
+                        str_val &&message) : 
+                            username(std::move(username)), registered(registered),
+                            message(std::move(message))
+        {
+        }
+
+
         str_val username;
         bool registered;
         str_val message;
