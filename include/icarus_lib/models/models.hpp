@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <chrono>
 #include <utility>
 
 namespace icarus_lib::models
@@ -106,7 +107,8 @@ namespace icarus_lib::models
         std::vector<unsigned char> data;
     };
 
-    template<typename str_val, typename int_val>
+    template<typename str_val, typename int_val,
+             typename time_p = std::chrono::system_clock::time_point>
     class token {
     public:
         token() = default;
@@ -117,9 +119,17 @@ namespace icarus_lib::models
                 access_token(access_token), token_type(token_type), 
                 expiration(expiration) { }
 
+        int_val token_id;
         str_val access_token;
         int_val expiration;
         str_val token_type;
+        time_p originally_issued;
+        time_p originally_expires;
+        time_p refreshed_issued;
+        time_p refreshed_expires;
+        int_val refresh_count;
+        bool active;
+        int_val user_id;
     };
 
     template<typename str_val, typename int_val>
