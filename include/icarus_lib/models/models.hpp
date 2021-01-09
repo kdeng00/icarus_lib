@@ -84,9 +84,12 @@ namespace icarus_lib::models
     class year {
     public:
         year() = default;
-        year(const song<std::string, int_val, long> &song) : 
-                id(song.year_id), song_year(song.year) { }
-        year(const int_val id) : id(id) { }
+        year(const song<std::string, int_val, long> &song) : id(song.year_id), song_year(song.year)
+        {
+        }
+        year(const int_val id) : id(id)
+        {
+        }
 
         int_val id;
         int_val song_year;
@@ -107,8 +110,7 @@ namespace icarus_lib::models
         std::vector<unsigned char> data;
     };
 
-    template<typename str_val, typename int_val,
-             typename time_p = std::chrono::system_clock::time_point>
+    template<typename str_val, typename int_val, typename time_p = std::chrono::system_clock::time_point>
     class token {
     public:
         token() = default;
@@ -123,11 +125,9 @@ namespace icarus_lib::models
         str_val access_token;
         int_val expiration;
         str_val token_type;
-        time_p originally_issued;
-        time_p originally_expires;
-        time_p refreshed_issued;
-        time_p refreshed_expires;
-        int_val refresh_count;
+        time_p issued;
+        time_p expires;
+        bool refresh_token;
         bool active;
         int_val user_id;
     };
