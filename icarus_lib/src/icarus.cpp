@@ -1,4 +1,4 @@
-#include "icarus_lib/icarus.h"
+#include "icarus.h"
 
 
 namespace icarus_lib
