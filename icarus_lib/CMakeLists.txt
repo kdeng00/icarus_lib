@@ -18,12 +18,17 @@ endif()
 
 
 if(NOT DEFINED VCPKG_TRIPLET)
-    message("VCPKG_TRIPLET has not been defined...")
-    set(VCPKG_TRIPLET "x64-linux")
+    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        set(MACOSX TRUE)
+        set(VCPKG_TRIPLET "x64-osx")
+    else ()
+        set(VCPKG_TRIPLET "x64-linux")
+    endif()
+
     message("Using default ${VCPKG_TRIPLET} triplet")
 endif()
 
-project(icarus_lib VERSION "0.0.1" DESCRIPTION "Library used to power the icarus api and mear")
+project(icarus_lib VERSION "0.0.1" DESCRIPTION "Library used to power the icarus api")
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
