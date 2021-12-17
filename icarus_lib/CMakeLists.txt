@@ -31,12 +31,52 @@ endif()
 project(icarus_lib VERSION "0.0.1" DESCRIPTION "Library used to power the icarus api")
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/icarus.cpp)
 
 
+set(LIBMYSQL_MAIN_H
+    "${VCPKG_ROOT_PATH}/packages/libmysql_${VCPKG_TRIPLET}/include")
+
+message("MySQL path ${LIBMYSQL_MAIN_H}")
+
+find_package(libmysql REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(CURL CONFIG REQUIRED)
+find_package(cpr CONFIG REQUIRED)
+find_path(JWT_CPP_INCLUDE_DIRS "jwt-cpp/base.h")
+find_package(nlohmann_json CONFIG REQUIRED)
+
+
+# if(NOT DEFINED ICARUS_DATA_BUILD_OUTPUT)
+    # set(SOCI_CONFIG_H_FILE
+        # "${CMAKE_BINARY_DIR}/libraries/icarus_data/3rdparty/soci/include")
+# else()
+    # set(SOCI_CONFIG_H_FILE
+        # "${ICARUS_DATA_BUILD_OUTPUT}/3rdparty/soci/include")
+# endif()
+
+
+# message("soci-config path ${SOCI_CONFIG_H_FILE}")
+
+# Don't remember if I need this. Will eventually find out
+# include_directories("${CMAKE_CURRENT_LIST_DIR}/include")
+
+
 add_library(icarus_lib SHARED ${SOURCES})
 
 target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+target_link_libraries(icarus_lib PUBLIC ${MYSQL_LIBRARIES})
+# target_link_libraries(icarus_lib PUBLIC soci_core soci_mysql)
+# target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${SOCI_CONFIG_H_FILE})
+# target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+target_include_directories(icarus_lib PUBLIC ${LIBMYSQL_MAIN_H})
+
+target_link_libraries(main PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(main PRIVATE CURL::libcurl)
+target_link_libraries(main PRIVATE cpr)
+target_include_directories(main PRIVATE ${JWT_CPP_INCLUDE_DIRS})
+target_link_libraries(main PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
+
