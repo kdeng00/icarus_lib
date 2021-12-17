@@ -35,8 +35,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
 
-set(SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/src/icarus.cpp)
+# set(SOURCES
+    # ${CMAKE_CURRENT_LIST_DIR}/src/icarus.cpp)
 
 
 # set(LIBMYSQL_MAIN_H
@@ -68,19 +68,22 @@ find_package(unofficial-libmariadb CONFIG REQUIRED)
 # include_directories("${CMAKE_CURRENT_LIST_DIR}/include")
 
 
-add_library(icarus_lib SHARED ${SOURCES})
+# add_library(icarus_lib SHARED ${SOURCES})
+add_library(icarus_lib INTERFACE)
 
-target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
+
+target_include_directories(icarus_lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
 # target_link_libraries(icarus_lib PUBLIC ${MYSQL_LIBRARIES})
 # target_link_libraries(icarus_lib PUBLIC soci_core soci_mysql)
 # target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${SOCI_CONFIG_H_FILE})
 # target_include_directories(icarus_lib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
 # target_include_directories(icarus_lib PUBLIC ${LIBMYSQL_MAIN_H})
 
-target_link_libraries(icarus_lib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-target_link_libraries(icarus_lib PRIVATE CURL::libcurl)
-target_link_libraries(icarus_lib PRIVATE cpr)
-target_include_directories(icarus_lib PRIVATE ${JWT_CPP_INCLUDE_DIRS})
-target_link_libraries(icarus_lib PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
-target_link_libraries(icarus_lib PRIVATE unofficial::libmariadb)
+target_link_libraries(icarus_lib INTERFACE OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(icarus_lib INTERFACE CURL::libcurl)
+target_link_libraries(icarus_lib INTERFACE cpr)
+target_include_directories(icarus_lib INTERFACE ${JWT_CPP_INCLUDE_DIRS})
+target_link_libraries(icarus_lib INTERFACE nlohmann_json nlohmann_json::nlohmann_json)
+target_link_libraries(icarus_lib INTERFACE unofficial::libmariadb)
 

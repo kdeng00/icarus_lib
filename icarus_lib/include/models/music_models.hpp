@@ -7,6 +7,7 @@
 
 namespace icarus_lib::models
 {
+
 template<typename str_val, typename int_val,
          typename long_val, typename raw_data>
 class song_type
@@ -119,6 +120,7 @@ public:
     // Not being used but it should be
     std::vector<raw_data> data;
 };
+
 }
 
 #endif
