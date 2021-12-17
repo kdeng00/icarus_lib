@@ -1,3 +1,5 @@
+// TODO: Remove this file. Using database/cloud/base_repository.h instead
+/**
 #ifndef BASE_REPOSITORIES_H_
 #define BASE_REPOSITORIES_H_
 
@@ -113,3 +115,5 @@ private:
 }
 
 #endif
+
+*/

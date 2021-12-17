@@ -8,6 +8,13 @@
 #include "models/models.hpp"
 #include "types/auth.hpp"
 #include "types/music.hpp"
+
+#include "repositories/database/cloud/album_repository.hpp"
+#include "repositories/database/cloud/artist_repository.hpp"
+#include "repositories/database/cloud/cover_art_repository.hpp"
+#include "repositories/database/cloud/genre_repository.hpp"
+#include "repositories/database/cloud/song_repository.hpp"
+#include "repositories/database/cloud/token_repository.hpp"
 #include "repositories/database/cloud/user_repository.hpp"
 
 namespace icarus_lib
@@ -22,6 +29,7 @@ using genre = models::genre_type<song, std::string, int>;
 // TODO: Will not be used
 // using year = year_type<int>;
 using cover = models::cover_type<song, std::string, int, raw_data>;
+using cover_art = models::cover_type<song, std::string, int, raw_data>;
 
 using token = models::token_type<std::string, int, std::chrono::system_clock::time_point>;
 using login_result = models::login_result_type<std::string, int>;
@@ -45,6 +53,12 @@ using token_filter = types::token_filter;
 using user_filter = types::user_filter;
 using salt_filter = types::salt_filter;
 
+using album_repository = database::album_repository<album, types::album_filter, conn_string>;
+using artist_repository = database::artist_repository<artist, types::artist_filter, conn_string>;
+using cover_art_repository = database::cover_art_repository<cover_art, types::cover_filter, conn_string>;
+using genre_repository = database::genre_repository<genre, types::genre_filter, conn_string>;
+using song_repository = database::song_repository<song, types::song_filter, conn_string>;
+using token_repository = database::token_repository<token, types::token_filter, conn_string>;
 using user_repository = database::user_repository<user, pass_sec, 
     salt_filter, user_filter, conn_string>;
 

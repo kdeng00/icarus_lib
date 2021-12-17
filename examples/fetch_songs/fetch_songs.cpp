@@ -4,14 +4,14 @@
 #include <algorithm>
 
 #include "example.hpp"
-#include "icarus_data/icarus_data.h"
+#include "icarus_lib/icarus.h"
 
 using std::cout;
 using std::vector;
 
-using song = icarus_data::song;
-using conn_string = icarus_data::conn_string;
-using song_repository = icarus_data::song_repository;
+using song = icarus_lib::song;
+using conn_string = icarus_lib::conn_string;
+using song_repository = icarus_lib::song_repository;
 
 
 conn_string test_connection_string(char **argv)
@@ -72,10 +72,10 @@ int main(int argc, char **argv)
     const auto songs = song_repo.retrieveRecords();
     print_songs<song, vector<song>>(songs);
 
-    const auto song_my = song_repo.retrieveRecord(songs.at(0), icarus_data::types::song_filter::TITLE_AND_ARTIST);
+    const auto song_my = song_repo.retrieveRecord(songs.at(0), icarus_lib::types::song_filter::TITLE_AND_ARTIST);
 
     cout << "Printing song:\n";
-    print_song<icarus_data::song>(song_my);
+    print_song<icarus_lib::song>(song_my);
 
 
     return 0;

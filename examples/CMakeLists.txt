@@ -62,12 +62,12 @@ set(ICARUS_LIB_BUILD_OUTPUT ${CMAKE_BINARY_DIR}/subdirs)
 # TODO: Add examples that cover fetching, updating, creating, and deleting
 
 set(EXAMPLES
-#     create_users
-#     delete_users
-#     fetch_albums
-#     fetch_songs
+    create_users
+    delete_users
+    fetch_albums
+    fetch_songs
     fetch_users
-#     update_users
+    update_users
 )
 
 foreach (example ${EXAMPLES})
