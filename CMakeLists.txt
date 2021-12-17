@@ -49,6 +49,8 @@ find_package(SOCI CONFIG REQUIRED)
 add_library(icarus_lib INTERFACE)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
+# Add tests
+# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 target_include_directories(icarus_lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
 
