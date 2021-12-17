@@ -33,14 +33,14 @@ cd icarus_lib
 Bootstrapping vcpkg
 
 ```BASH
-3rdparty/vcpkg/bootstrap.sh
+include/3rdparty/vcpkg/bootstrap.sh
 ```
 
 Installing dependencies
 
 ```BASH
-cd 3rdparty/vcpkg
-3rdparty/vcpkg/vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2 soci
+cd include/3rdparty/vcpkg
+./vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2 soci
 ```
 
 Building library
