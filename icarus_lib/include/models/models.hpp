@@ -13,12 +13,13 @@
 namespace icarus_lib::models
 {
 
-using song = song_type<std::string, int, long>;
+using song = song_type<std::string, int, long, unsigned char>;
 using artist = artist_type<song, std::string, int>;
 using album = album_type<song, std::string, int>;
 using genre = genre_type<song, std::string, int>;
-using year = year_type<int>;
-using cover = cover_type<song, std::string, int>;
+// TODO: Will not be used
+// using year = year_type<int>;
+using cover = cover_type<song, std::string, int, unsigned char>;
 
 using token = token_type<std::string, int, std::chrono::system_clock::time_point>;
 using login_result = login_result_type<std::string, int>;
@@ -29,6 +30,7 @@ using auth_credentials = auth_credentials_type<std::string>;
 
 using database_connection = database_connection_type<std::string>;
 using binary_path = binary_path_type<std::string>;
+
 }
 
 

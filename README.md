@@ -35,7 +35,7 @@ Installing dependencies
 
 ```BASH
 cd 3rdparty/vcpkg
-3rdparty/vcpkg/vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmysql catch2
+3rdparty/vcpkg/vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2
 ```
 
 Building library

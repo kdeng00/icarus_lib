@@ -8,7 +8,7 @@
 namespace icarus_lib::models
 {
 template<typename str_val, typename int_val,
-         typename long_val>
+         typename long_val, typename raw_data>
 class song_type
 {
 public:
@@ -29,12 +29,15 @@ public:
     int_val track;
     int_val disc;
     str_val song_path;
-    std::vector<unsigned char> data;
+    std::vector<raw_data> data;
     int_val cover_art_id;
     int_val artist_id;
     int_val album_id;
     int_val genre_id;
-    int_val year_id;
+    // TODO: Field will be removed from the database table
+    // int_val year_id;
+    // TODO: New field. Not in DB table
+    str_val datecreated;
 };
 
 
@@ -82,6 +85,8 @@ public:
 
 };
 
+// TODO: Will not be stored in the database as a table
+/**
 template<typename int_val>
 class year_type
 {
@@ -97,8 +102,9 @@ public:
     int_val id;
     int_val song_year;
 };
+*/
 
-template<class song_val, typename str_val, typename int_val>
+template<class song_val, typename str_val, typename int_val, typename raw_data>
 class cover_type
 {
 public:
@@ -111,7 +117,7 @@ public:
     str_val song_title;
     str_val image_path;
     // Not being used but it should be
-    std::vector<unsigned char> data;
+    std::vector<raw_data> data;
 };
 }
 

@@ -5,11 +5,13 @@
 namespace icarus_lib::models
 {
     template<typename str_val>
-    struct database_connection_type {
+    class database_connection_type {
+    public:
         str_val server;
         str_val username;
         str_val password;
         str_val database;
+        int port;
     };
 
     template<typename str_val>

@@ -26,7 +26,7 @@ public:
 };
 
 template<typename str_val, typename int_val>
-struct login_result_type {
+class login_result_type {
     int_val user_id;
     str_val username;
     str_val access_token;
@@ -67,6 +67,8 @@ struct user_type {
     str_val phone;
     str_val username;
     str_val password;
+    // TODO: New fields. No columns have been created in the DB table
+    str_val datecrated;
 };
 
 template<typename str_val, typename int_val>
