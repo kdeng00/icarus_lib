@@ -9,8 +9,8 @@
 #include "auth_models.hpp"
 #include "config_models.hpp"
 #include "music_models.hpp"
-#include "types/music.hpp"
-#include "types/auth.hpp"
+#include "icarus_lib/types/music.hpp"
+#include "icarus_lib/types/auth.hpp"
 
 namespace icarus_lib::models
 {

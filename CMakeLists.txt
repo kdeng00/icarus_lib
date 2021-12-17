@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.13)
 
 
 if(NOT DEFINED VCPKG_ROOT_PATH)
@@ -51,6 +51,7 @@ find_package(cpr CONFIG REQUIRED)
 find_path(JWT_CPP_INCLUDE_DIRS "jwt-cpp/base.h")
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(unofficial-libmariadb CONFIG REQUIRED)
+find_package(SOCI CONFIG REQUIRED)
 
 
 # if(NOT DEFINED ICARUS_DATA_BUILD_OUTPUT)
@@ -86,4 +87,5 @@ target_link_libraries(icarus_lib INTERFACE cpr)
 target_include_directories(icarus_lib INTERFACE ${JWT_CPP_INCLUDE_DIRS})
 target_link_libraries(icarus_lib INTERFACE nlohmann_json nlohmann_json::nlohmann_json)
 target_link_libraries(icarus_lib INTERFACE unofficial::libmariadb)
+target_link_libraries(icarus_lib INTERFACE SOCI::soci_core_static SOCI::soci_empty_static)
 

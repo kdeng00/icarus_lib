@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "icarus_lib/icarus_lib.h"
+#include "icarus_lib/icarus.h"
 
 using icarus_lib::conn_string;
 

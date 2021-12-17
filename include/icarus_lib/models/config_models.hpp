@@ -7,7 +7,7 @@ namespace icarus_lib::models
     template<typename str_val>
     class database_connection_type {
     public:
-        str_val server;
+        str_val host;
         str_val username;
         str_val password;
         str_val database;

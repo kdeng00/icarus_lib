@@ -1,3 +1,6 @@
+#ifndef ICARUS_TYPES_H
+#define ICARUS_TYPES_H
+
 namespace icarus_lib::types {
 
 enum class salt_filter
@@ -33,3 +36,5 @@ enum class token_filter
 };
 
 }
+
+#endif

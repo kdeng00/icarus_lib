@@ -2,7 +2,7 @@
 
 #include "example.hpp"
 
-#include "icarus_lib/icarus_lib.h"
+#include "icarus_lib/icarus.h"
 
 using std::cout;
 
