@@ -13,7 +13,7 @@
 #include <mysql/mysql.h>
 #include <soci/soci.h>
 
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
+#include "repositories/database/cloud/base_repository.h"
 
 
 namespace icarus_lib::database {

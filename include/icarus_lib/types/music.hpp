@@ -29,14 +29,6 @@ enum class genre_filter
     CATEGORY = 1
 };
 
-enum class path_type
-{
-    MUSIC = 0,
-    ARCHIVE = 1,
-    TEMP = 2,
-    COVER_ART = 3
-};
-
 enum class song_changed
 {
     TITLE = 0,

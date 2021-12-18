@@ -6,8 +6,9 @@
 
 // #include "icarus.h"
 #include "models/models.hpp"
-#include "types/auth.hpp"
-#include "types/music.hpp"
+// #include "types/auth.hpp"
+// #include "types/music.hpp"
+#include "types/types.hpp"
 
 #include "repositories/database/cloud/album_repository.hpp"
 #include "repositories/database/cloud/artist_repository.hpp"
@@ -52,6 +53,8 @@ using cover_art_filter = types::cover_filter;
 using token_filter = types::token_filter;
 using user_filter = types::user_filter;
 using salt_filter = types::salt_filter;
+
+using path_type = types::path_type;
 
 using album_repository = database::album_repository<album, types::album_filter, conn_string>;
 using artist_repository = database::artist_repository<artist, types::artist_filter, conn_string>;

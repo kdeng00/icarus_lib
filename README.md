@@ -11,7 +11,7 @@
 * curl
 * openssl
 * jwt-cpp
-* bcrypt
+* cryptopp
 * libmariadb
 * catch2
 * soci
@@ -40,7 +40,7 @@ Installing dependencies
 
 ```BASH
 cd include/3rdparty/vcpkg
-./vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2 soci
+./vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2 soci cryptopp
 ```
 
 Building library
