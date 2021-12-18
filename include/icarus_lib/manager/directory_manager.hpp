@@ -7,9 +7,9 @@
 #include <string_view>
 #include <filesystem>
 
-#include "models/models.hpp"
 #include <nlohmann/json.hpp>
 
+#include "models/models.hpp"
 #include "types/types.hpp"
 
 namespace icarus_lib::manager {
@@ -45,7 +45,7 @@ public:
             std::filesystem::create_directory(albPath);
         }
 
-        auto discPath = DirectoryManager().relativeDiscSongPathFilesystem(albPath, song);
+        auto discPath = directory_manager().relativeDiscSongPathFilesystem(albPath, song);
 
         if (std::filesystem::exists(discPath)) {
             std::cout << "disc path exists\n";
@@ -87,7 +87,7 @@ public:
             std::filesystem::create_directory(albPath);
         }
 
-        auto discPath = DirectoryManager().relativeDiscSongPathFilesystem(albPath, song);
+        auto discPath = directory_manager().relativeDiscSongPathFilesystem(albPath, song);
         if (std::filesystem::exists(discPath)) {
             std::cout << "disc path exists\n";
         } else {
@@ -110,7 +110,7 @@ public:
 
     static std::string contentOfPath(const std::string &path)
     {
-        std::std::filesystemtream a(path, std::ios::in);
+        std::fstream a(path, std::ios::in);
         std::stringstream s;
         s << a.rdbuf();
         a.close();
@@ -122,16 +122,16 @@ public:
     {
         std::string path;
         switch (pType) {
-            case type::PathType::music:
+            case types::path_type::music:
                 path = "root_music_path";
                 break;
-            case type::PathType::archive:
+            case types::path_type::archive:
                 path = "archive_root_path";
                 break;
-            case type::PathType::temp:
+            case types::path_type::temp:
                 path = "temp_root_path";
                 break;
-            case type::PathType::coverArt:
+            case types::path_type::coverart:
                 path = "cover_root_path";
                 break;
             default:
