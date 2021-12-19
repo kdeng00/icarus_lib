@@ -5,15 +5,20 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+#include <fstream>
+#include <filesystem>
 #include <memory>
 #include <vector>
 #include <utility>
 
 
 #include <mysql/mysql.h>
+#include <nlohmann/json.hpp>
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 // #include <soci/mysql/soci-mysql.h>
+
+#include "icarus_lib/models/models.hpp"
 
 namespace icarus_lib::database {
 
@@ -28,6 +33,10 @@ protected:
     base_repository(const ConnStr &details, const std::string &table_name) :
         details(details), table_name(table_name)
     {
+    }
+    base_repository(const models::binary_path &bConf, const std::string &table_name) : m_bConf(bConf)
+    {
+        initialize_base<models::binary_path>(bConf);
     }
     base_repository(const std::string &path) :
         path(path)
@@ -117,8 +126,27 @@ protected:
 
 
     ConnStr details;
+    models::binary_path m_bConf;
     std::string table_name;
 private:
+    template<typename BinaryPath>
+    void initialize_base(const BinaryPath &bConf)
+    {
+        auto path = std::filesystem::canonical(bConf.path).parent_path().string();
+        path.append("/database.json");
+        std::fstream file(path, std::ios::in);
+        std::stringstream buff;
+        buff << file.rdbuf();
+        file.close();
+        const auto content = buff.str();
+        auto config = nlohmann::json::parse(content);
+
+        this->details.database = config["database"].get<std::string>();
+        this->details.host = config["server"].get<std::string>();
+        this->details.username = config["username"].get<std::string>();
+        this->details.password = config["password"].get<std::string>();
+    }
+
     std::string path;
 };
 

@@ -18,6 +18,10 @@ public:
         base_repository<ConnStr>(conn_str, table)
     {
     }
+    user_repository(const models::binary_path &conn_str, const std::string table = "User") : 
+        base_repository<ConnStr>(conn_str, table)
+    {
+    }
 
 
     User retrieveUserRecord(User &usr, Filter filter)
