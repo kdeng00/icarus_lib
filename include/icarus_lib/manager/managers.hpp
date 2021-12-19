@@ -9,9 +9,9 @@
 namespace icarus_lib::manager
 {
 
-using directory_manager = manager::directory_manager;
+using directory_manager = manager::directory_manager_t;
 // using album_manager = manager::album_manager<models::album>;
-using token_manager = manager::token_manager<models::token>;
+using token_manager = manager::token_manager_t<models::token>;
 
 }
 

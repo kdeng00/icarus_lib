@@ -11,13 +11,11 @@
 #include <mysql/mysql.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
-#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-using icarus_lib::database::base_repository;
-using icarus_lib::database::repository_utility;
+namespace icarus_lib::repositores::database::cloud {
 
-namespace icarus_lib { namespace database {
 template<class Artist, typename Filter, class ConnStr>
 class artist_repository : public base_repository<ConnStr>
 {
@@ -397,6 +395,7 @@ private:
         return art;
     }
 };
-}}
+
+}
 
 #endif

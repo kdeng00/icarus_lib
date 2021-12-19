@@ -11,6 +11,7 @@
 
 
 #include <mysql/mysql.h>
+#include <nlohmann/json.hpp>
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 // #include <soci/mysql/soci-mysql.h>
@@ -18,7 +19,7 @@
 #include "icarus_lib/manager/managers.hpp"
 #include "icarus_lib/models/models.hpp"
 
-namespace icarus_lib::database {
+namespace icarus_lib::repositories::database::cloud {
 
 template<class ConnStr>
 class base_repository
@@ -45,10 +46,13 @@ protected:
     void intitalizeBase(const Config &bConf)
     {
         auto config = Mgr::databaseConfigContent(bConf);
+        // TODO: Build issue
+        /**
         this->details.database = config["database"].get<std::string>();
         this->details.host = config["server"].get<std::string>();
         this->details.username = config["username"].get<std::string>();
         this->details.password = config["password"].get<std::string>();
+        */
     }
 
     bool test_connection()

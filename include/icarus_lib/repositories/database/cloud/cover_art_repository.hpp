@@ -11,13 +11,14 @@
 #include <mysql/mysql.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
-#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-using icarus_lib::database::base_repository;
-using icarus_lib::database::repository_utility;
+using icarus_lib::repositories::database::cloud::base_repository;
+using icarus_lib::repositories::database::cloud::repository_utility;
 
-namespace icarus_lib { namespace database {
+namespace icarus_lib::repositories::database::cloud {
+
 template<class Cover, typename Filter, class ConnStr>
 class cover_art_repository : public base_repository<ConnStr>
 {
@@ -344,6 +345,7 @@ private:
         return cover;
     }
 };
-}}
+
+}
 
 #endif

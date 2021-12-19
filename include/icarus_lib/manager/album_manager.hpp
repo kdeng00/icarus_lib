@@ -5,7 +5,6 @@
 
 #include <memory>
 
-// #include "icarus_lib/icarus.h"
 #include "icarus_lib/manager/base_manager.hpp"
 #include "icarus_lib/models/models.hpp"
 #include "icarus_lib/repositories/database/cloud/album_repository.hpp"

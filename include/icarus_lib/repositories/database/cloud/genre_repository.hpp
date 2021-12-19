@@ -11,11 +11,12 @@
 #include <mysql/mysql.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
 
-using icarus_lib::database::base_repository;
 
-namespace icarus_lib { namespace database {
+namespace icarus_lib::repositories::database::cloud
+{
+
 template<class Genre, typename Filter, class ConnStr>
 class genre_repository : public base_repository<ConnStr>
 {
@@ -374,6 +375,6 @@ private:
         return genre;
     }
 };
-}}
+}
 
 #endif

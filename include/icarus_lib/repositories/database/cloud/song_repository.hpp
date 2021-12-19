@@ -11,17 +11,17 @@
 #include <mysql/mysql.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
-#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
 using icarus_lib::database::base_repository;
 using icarus_lib::database::repository_utility;
 
-namespace icarus_lib { namespace database {
-template<class Song, typename Filter, class ConnStr>
+namespace icarus_lib::repositories::database::cloud {
 
 // TODO: Start using the construct_params_* functions from the repository_utility class
 // Cuts down on code size
+template<class Song, typename Filter, class ConnStr>
 class song_repository : public base_repository<ConnStr>
 {
 public:
@@ -630,6 +630,7 @@ private:
         song.album_artist = std::get<5>(metaBuff);
     }
 };
-}}
+
+}
 
 #endif

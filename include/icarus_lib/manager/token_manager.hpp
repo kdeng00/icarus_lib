@@ -11,7 +11,6 @@
 #include <chrono>
 
 #include <cpr/cpr.h>
-// #include <icarus_lib/icarus.h>
 #include <jwt-cpp/jwt.h>
 #include <nlohmann/json.hpp>
 
@@ -19,7 +18,8 @@
 #include "icarus_lib/manager/base_manager.hpp"
 #include "icarus_lib/manager/directory_manager.hpp"
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/token_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repositories.hpp"
+// #include "icarus_lib/repositories/database/cloud/token_repository.hpp"
 #include "icarus_lib/types/types.hpp"
 
 using icarus_lib::manager::base_manager;
@@ -28,24 +28,24 @@ namespace icarus_lib::manager
 {
 
 template<class Token>
-class token_manager : public base_manager<models::binary_path>
+class token_manager_t : public base_manager<models::binary_path>
 {
 public:
-    token_manager() = default;
-    token_manager(models::binary_path &config) : base_manager(config)
+    token_manager_t() = default;
+    token_manager_t(models::binary_path &config) : base_manager(config)
     {
     }
 
     Token create_token(const models::binary_path &config, const models::user& usr)
     {
         std::cout << "Fetching icarus key config\n";
-        auto t = directory_manager::keyConfigContent(config);
+        auto t = manager::directory_manager::keyConfigContent(config);
 
         std::string private_key_path(t["rsa_private_key_path"]);
         std::string public_key_path(t["rsa_public_key_path"]);
 
-        auto private_key = directory_manager::contentOfPath(private_key_path);
-        auto public_key = directory_manager::contentOfPath(public_key_path);
+        auto private_key = manager::directory_manager::contentOfPath(private_key_path);
+        auto public_key = manager::directory_manager::contentOfPath(public_key_path);
 
         auto current_time = std::chrono::system_clock::now();
 
@@ -124,8 +124,9 @@ public:
         auto authHeader = std::get<1>(authPair);
 
         auto token = authHeader.at(authHeader.size()-1);
+        auto decoded = jwt::decode(token);
 
-        auto scopes = extractScopes(jwt::decode(token));
+        auto scopes = extractScopes<jwt::decoded_jwt>(decoded);
 
         switch (scope)
         {
@@ -158,9 +159,9 @@ public:
         return false;
     }
 private:
-    template<typename str_type = std::string, typename container = std::vector<str_type>,
-                typename jwt_decoded = jwt::decoded_jwt>
-    container extractScopes(jwt_decoded &&decoded)
+    // template<typename str_type = std::string, typename container = std::vector<str_type>, class jwt_decoded = jwt::decoded_jwt>
+    template<typename Decoded_jwt, typename str_type = std::string, typename container = std::vector<str_type>>
+    container extractScopes(Decoded_jwt &&decoded)
     {
         container scopes;
         auto payload_claims = decoded.get_payload_claims();
@@ -210,13 +211,13 @@ private:
     template<typename decode, template <typename,typename> class pair>
     pair<bool, decode> is_token_verified(const Token &tokn)
     {
-        auto t = directory_manager::keyConfigContent(m_config);
+        auto t = manager::directory_manager::keyConfigContent(m_config);
 
         std::string private_key_path(t["rsa_private_key_path"]);
         std::string public_key_path(t["rsa_public_key_path"]);
 
-        auto private_key = directory_manager::contentOfPath(private_key_path);
-        auto public_key = directory_manager::contentOfPath(public_key_path);
+        auto private_key = manager::directory_manager::contentOfPath(private_key_path);
+        auto public_key = manager::directory_manager::contentOfPath(public_key_path);
 
         auto verify = jwt::verify()
             .allow_algorithm(jwt::algorithm::rs256(public_key, private_key, "", ""

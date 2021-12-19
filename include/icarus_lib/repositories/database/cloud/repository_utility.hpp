@@ -6,7 +6,7 @@
 #include <string>
 #include <cstring>
 
-#include "mysql/mysql.h"
+#include <mysql/mysql.h>
 
 namespace icarus_lib::database {
 

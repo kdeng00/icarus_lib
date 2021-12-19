@@ -1,5 +1,5 @@
-#ifndef TOKENREPOSITORY_H_
-#define TOKENREPOSITORY_H_
+#ifndef TOKENREPOSITORY_REPO_H_
+#define TOKENREPOSITORY_REPO_H_
 
 #include <memory>
 #include <chrono>
@@ -14,14 +14,14 @@
 #include <soci/soci.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
-#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-using icarus_lib::database::base_repository;
+using icarus_lib::repositories::database::cloud::base_repository;
 // using icarus_lib::database::repository_utility;
 
 
-namespace icarus_lib::database {
+namespace icarus_lib::repositories::database::cloud {
 
 template<class Token, typename Filter, class ConnStr>
 class token_repository : public base_repository<ConnStr>

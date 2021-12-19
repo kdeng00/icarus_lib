@@ -45,6 +45,8 @@ find_package(unofficial-libmariadb CONFIG REQUIRED)
 # find_package(SOCI CONFIG REQUIRED)
 find_package(cryptopp CONFIG REQUIRED)
 
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)
+include_directories(${CMAKE_BINARY_DIR}/include/3rdparty/soci/include)
 
 set(SOCI_TESTS OFF CACHE BOOL "enable soci tests" FORCE)
 set(SOCI_EMPTY OFF CACHE BOOL "enable soci empty" FORCE)
@@ -56,7 +58,7 @@ set(WITH_DB2 OFF CACHE BOOL "enable DB2" FORCE)
 set(WITH_FIREBIRD OFF CACHE BOOL "enable firebird" FORCE)
 set(WITH_ORACLE OFF CACHE BOOL "enable oracle" FORCE)
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/3rdparty/soci)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci)
 
 
 add_library(icarus_lib INTERFACE)

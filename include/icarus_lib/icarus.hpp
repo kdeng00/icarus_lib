@@ -11,6 +11,7 @@
 // #include "types/music.hpp"
 #include "icarus_lib/types/types.hpp"
 
+/**
 #include "icarus_lib/repositories/database/cloud/album_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/artist_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/cover_art_repository.hpp"
@@ -18,6 +19,8 @@
 #include "icarus_lib/repositories/database/cloud/song_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/token_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/user_repository.hpp"
+*/
+#include "icarus_lib/repositories/database/cloud/repositories.hpp"
 
 namespace icarus_lib
 {
@@ -59,14 +62,13 @@ using scope = types::scope;
 
 using path_type = types::path_type;
 
-using album_repository = database::album_repository<album, types::album_filter, conn_string>;
-using artist_repository = database::artist_repository<artist, types::artist_filter, conn_string>;
-using cover_art_repository = database::cover_art_repository<cover_art, types::cover_filter, conn_string>;
-using genre_repository = database::genre_repository<genre, types::genre_filter, conn_string>;
-using song_repository = database::song_repository<song, types::song_filter, conn_string>;
-using token_repository = database::token_repository<token, types::token_filter, conn_string>;
-using user_repository = database::user_repository<user, pass_sec, 
-    salt_filter, user_filter, conn_string>;
+using album_repository = database::album_repository;
+using artist_repository = database::artist_repository;
+using cover_art_repository = database::cover_art_repository;
+using genre_repository = database::genre_repository;
+using song_repository = database::song_repository;
+using token_repository = database::token_repository;
+using user_repository = database::user_repository;
 
 };
 

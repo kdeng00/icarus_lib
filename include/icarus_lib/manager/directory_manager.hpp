@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <string_view>
 #include <filesystem>
 
@@ -14,9 +15,9 @@
 
 namespace icarus_lib::manager {
 
-class directory_manager {
+class directory_manager_t {
 public:
-    directory_manager() = default;
+    directory_manager_t() = default;
 
     static std::string createDirectoryProcess(const models::song &song, const std::string &rootPath)
     {
@@ -149,12 +150,13 @@ public:
         return nlohmann::json::parse(contentOfPath(path));
     }
 
-    static nlohmann::json databaseConfigContent(const models::binary_path &bConf)
+    template<class Json = nlohmann::json>
+    static Json databaseConfigContent(const models::binary_path &bConf)
     {
         auto path = configPath(bConf);
         path.append("/database.json");
 
-        return nlohmann::json::parse(contentOfPath(path));
+        return Json::parse(contentOfPath(path));
     }
 
     template<typename json = nlohmann::json,

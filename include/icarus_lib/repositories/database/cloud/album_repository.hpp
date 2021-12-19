@@ -12,13 +12,13 @@
 #include <mysql/mysql.h>
 
 #include "icarus_lib/models/models.hpp"
-#include "icarus_lib/repositories/database/cloud/base_repository.h"
-#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+#include "icarus_lib/repositories/database/cloud/base_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
 using icarus_lib::database::base_repository;
 using icarus_lib::database::repository_utility;
 
-namespace icarus_lib::database {
+namespace icarus_lib::repositories::database::cloud {
 
 template<class Album, typename Filter, class ConnStr>
 class album_repository : public base_repository<ConnStr>
@@ -399,6 +399,7 @@ private:
         return std::make_tuple(title, artist);
     }
 };
+
 }
 
 #endif
