@@ -25,6 +25,10 @@ public:
         base_repository<ConnStr>(conn_str, table)
     {
     }
+    song_repository(const models::binary_path &conn_str, const std::string table = "Song") : 
+        base_repository<ConnStr>(conn_str, table)
+    {
+    }
 
 
     std::vector<Song> retrieveRecords() {

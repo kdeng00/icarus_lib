@@ -26,6 +26,10 @@ public:
          base_repository<ConnStr>(conn_str, "Token")
     {
     }
+    token_repository(const models::binary_path &conn_str, const std::string table = "Token") : 
+         base_repository<ConnStr>(conn_str, "Token")
+    {
+    }
 
 
     std::vector<Token> retrieve_all_tokens()

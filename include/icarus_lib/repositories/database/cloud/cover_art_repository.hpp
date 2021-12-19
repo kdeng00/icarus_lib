@@ -20,6 +20,10 @@ public:
     cover_art_repository(const ConnStr &conn_str) : base_repository<ConnStr>(conn_str)
     {
     }
+    cover_art_repository(const models::binary_path &conn_str, const std::string tablename) : 
+        base_repository<ConnStr>(conn_str, tablename)
+    {
+    }
 
     std::vector<Cover> retrieveRecords()
     {

@@ -24,6 +24,11 @@ public:
     {
     }
 
+    album_repository(const models::binary_path &conn_str, const std::string table = "Album") : 
+        base_repository<ConnStr>(conn_str, table)
+    {
+    }
+
     std::vector<Album> retrieveRecords()
     {
         auto conn = this->setup_connection();

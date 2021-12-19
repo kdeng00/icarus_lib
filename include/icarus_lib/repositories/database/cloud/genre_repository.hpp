@@ -20,6 +20,10 @@ public:
     genre_repository(const ConnStr &details) : base_repository<ConnStr>(details)
     {
     }
+    genre_repository(const models::binary_path &details, const std::string tablename = "Genre") : 
+        base_repository<ConnStr>(details, tablename)
+    {
+    }
 
 
     std::vector<Genre> retrieveRecords()
