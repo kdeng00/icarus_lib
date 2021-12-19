@@ -35,7 +35,7 @@ endif()
 project(icarus_lib VERSION "0.0.1" DESCRIPTION "Library used to power the icarus api")
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)
@@ -45,6 +45,7 @@ set(VCPKG_INCLUDE_DIR "${VCPKG_ROOT_PATH}/installed/${VCPKG_TRIPLET}/include" CA
 message("including ${VCPKG_INCLUDE_DIR}")
 include_directories(${VCPKG_INCLUDE_DIR})
 include_directories(${CMAKE_BINARY_DIR}/include/3rdparty/soci/include)
+include_directories(${CMAKE_BINARY_DIR}/icarus_lib/include/3rdparty/soci/include)
 
 
 set(SOCI_TESTS OFF CACHE BOOL "enable soci tests" FORCE)
