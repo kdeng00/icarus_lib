@@ -2,6 +2,10 @@
 #define EXAMPLE_H_
 
 #include <iostream>
+#include <string>
+#include <memory>
+#include <vector>
+
 
 #include "icarus_lib/icarus.hpp"
 

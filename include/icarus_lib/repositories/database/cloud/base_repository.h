@@ -132,6 +132,8 @@ private:
     template<typename BinaryPath>
     void initialize_base(const BinaryPath &bConf)
     {
+        std::cout << "Initializing base...\n";
+
         auto path = std::filesystem::canonical(bConf.path).parent_path().string();
         path.append("/database.json");
         std::fstream file(path, std::ios::in);
@@ -139,6 +141,7 @@ private:
         buff << file.rdbuf();
         file.close();
         const auto content = buff.str();
+        std::cout << "Content: " << content << "\n";
         auto config = nlohmann::json::parse(content);
 
         this->details.database = config["database"].get<std::string>();

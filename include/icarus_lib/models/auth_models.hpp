@@ -4,12 +4,12 @@
 namespace icarus_lib::models
 {
 template<typename str_val, typename int_val, typename time_p>
-class token_type {
+class token_mod {
 public:
-    token_type() = default;
-    token_type(const str_val &access_token) :
+    token_mod() = default;
+    token_mod(const str_val &access_token) :
             access_token(access_token) { }
-    token_type(const str_val &access_token, const str_val &token_type, 
+    token_mod(const str_val &access_token, const str_val &token_type, 
             const int_val expiration) :
             access_token(access_token), token_type(token_type), 
             expiration(expiration) { }

@@ -32,7 +32,7 @@ using genre = models::genre_type<song, std::string, int>;
 using cover = models::cover_type<song, std::string, int, raw_data>;
 using cover_art = models::cover_type<song, std::string, int, raw_data>;
 
-using token = models::token_type<std::string, int, std::chrono::system_clock::time_point>;
+using token = models::token_mod<std::string, int, std::chrono::system_clock::time_point>;
 using login_result = models::login_result_type<std::string, int>;
 using register_result = models::register_result_type<std::string>;
 using user = models::user_type<std::string, int>;
@@ -50,18 +50,20 @@ using artist_filter = types::artist_filter;
 using album_filter = types::album_filter;
 using genre_filter = types::genre_filter;
 using cover_art_filter = types::cover_filter;
+using cover_filter = types::cover_filter;
 using token_filter = types::token_filter;
 using user_filter = types::user_filter;
 using salt_filter = types::salt_filter;
+using token_filter = types::token_filter;
 
 using path_type = types::path_type;
 
-using album_repository = database::album_repository<album, types::album_filter, conn_string>;
-using artist_repository = database::artist_repository<artist, types::artist_filter, conn_string>;
-using cover_art_repository = database::cover_art_repository<cover_art, types::cover_filter, conn_string>;
-using genre_repository = database::genre_repository<genre, types::genre_filter, conn_string>;
-using song_repository = database::song_repository<song, types::song_filter, conn_string>;
-using token_repository = database::token_repository<token, types::token_filter, conn_string>;
+using album_repository = database::album_repository<album, album_filter, conn_string>;
+using artist_repository = database::artist_repository<artist, artist_filter, conn_string>;
+using cover_art_repository = database::cover_art_repository<cover_art, cover_filter, conn_string>;
+using genre_repository = database::genre_repository<genre, genre_filter, conn_string>;
+using song_repository = database::song_repository<song, song_filter, conn_string>;
+using token_repository = repositories::database::cloud::token_repository<token, token_filter, conn_string>;
 using user_repository = database::user_repository<user, pass_sec, 
     salt_filter, user_filter, conn_string>;
 
