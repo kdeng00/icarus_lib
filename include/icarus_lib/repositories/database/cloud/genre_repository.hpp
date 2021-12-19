@@ -10,14 +10,20 @@
 
 #include <mysql/mysql.h>
 
+#include "icarus_lib/models/models.hpp"
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
+
+using icarus_lib::database::base_repository;
 
 namespace icarus_lib { namespace database {
 template<class Genre, typename Filter, class ConnStr>
 class genre_repository : public base_repository<ConnStr>
 {
 public:
-    genre_repository(const ConnStr &details) : base_repository<ConnStr>(details)
+    genre_repository(const ConnStr &details) : base_repository<ConnStr>(details, "Genre")
+    {
+    }
+    genre_repository(const models::binary_path &details) : base_repository<ConnStr>(details, "Genre")
     {
     }
 

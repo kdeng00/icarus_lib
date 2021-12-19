@@ -3,18 +3,25 @@
 
 #include <mysql/mysql.h>
 
+#include "icarus_lib/models/models.hpp"
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 #include "icarus_lib/repositories/database/cloud/repository_utility.h"
 
 using icarus_lib::database::repository_utility;
+using icarus_lib::database::base_repository;
 
 namespace icarus_lib::database {
 
 template<class User, class PassSec, typename SaltFilter, typename Filter, class ConnStr>
 class user_repository : public base_repository<ConnStr>
+// public base_repository<ConnStr>
 {
 public:
     user_repository(const ConnStr &conn_str, const std::string table = "User") : 
+        base_repository<ConnStr>(conn_str, table)
+    {
+    }
+    user_repository(const models::binary_path &conn_str, const std::string table = "User") : 
         base_repository<ConnStr>(conn_str, table)
     {
     }

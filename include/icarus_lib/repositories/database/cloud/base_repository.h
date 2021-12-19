@@ -15,6 +15,9 @@
 #include <soci/soci-backend.h>
 // #include <soci/mysql/soci-mysql.h>
 
+#include "icarus_lib/manager/managers.hpp"
+#include "icarus_lib/models/models.hpp"
+
 namespace icarus_lib::database {
 
 template<class ConnStr>
@@ -32,6 +35,20 @@ protected:
     base_repository(const std::string &path) :
         path(path)
     {
+    }
+    base_repository(const models::binary_path &bConf, const std::string &table_name) : m_bConf(bConf), table_name(table_name)
+    {
+        intitalizeBase<models::binary_path, icarus_lib::manager::directory_manager>(bConf);
+    }
+
+    template<class Config, class Mgr>
+    void intitalizeBase(const Config &bConf)
+    {
+        auto config = Mgr::databaseConfigContent(bConf);
+        this->details.database = config["database"].get<std::string>();
+        this->details.host = config["server"].get<std::string>();
+        this->details.username = config["username"].get<std::string>();
+        this->details.password = config["password"].get<std::string>();
     }
 
     bool test_connection()
@@ -117,6 +134,7 @@ protected:
 
 
     ConnStr details;
+    models::binary_path m_bConf;
     std::string table_name;
 private:
     std::string path;

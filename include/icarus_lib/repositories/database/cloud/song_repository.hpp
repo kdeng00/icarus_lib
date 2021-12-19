@@ -10,8 +10,12 @@
 
 #include <mysql/mysql.h>
 
+#include "icarus_lib/models/models.hpp"
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 #include "icarus_lib/repositories/database/cloud/repository_utility.h"
+
+using icarus_lib::database::base_repository;
+using icarus_lib::database::repository_utility;
 
 namespace icarus_lib { namespace database {
 template<class Song, typename Filter, class ConnStr>
@@ -22,6 +26,10 @@ class song_repository : public base_repository<ConnStr>
 {
 public:
     song_repository(const ConnStr &conn_str, const std::string table = "Song") : 
+        base_repository<ConnStr>(conn_str, table)
+    {
+    }
+    song_repository(const models::binary_path &conn_str, const std::string table = "Song") : 
         base_repository<ConnStr>(conn_str, table)
     {
     }
@@ -187,7 +195,7 @@ public:
                 params[0].length = 0;
                 params[0].is_null = 0;
                 break;
-            case Filter::title:
+            case Filter::TITLE:
                 qry << "sng.Title = ?";
 
                 params[0].buffer_type = MYSQL_TYPE_STRING;

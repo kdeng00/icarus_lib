@@ -13,7 +13,12 @@
 #include <mysql/mysql.h>
 #include <soci/soci.h>
 
-#include "repositories/database/cloud/base_repository.h"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/repositories/database/cloud/base_repository.h"
+#include "icarus_lib/repositories/database/cloud/repository_utility.h"
+
+using icarus_lib::database::base_repository;
+// using icarus_lib::database::repository_utility;
 
 
 namespace icarus_lib::database {
@@ -23,6 +28,10 @@ class token_repository : public base_repository<ConnStr>
 {
 public:
     token_repository(const ConnStr &conn_str, const std::string table = "Token") : 
+         base_repository<ConnStr>(conn_str, "Token")
+    {
+    }
+    token_repository(const models::binary_path &conn_str, const std::string table = "Token") : 
          base_repository<ConnStr>(conn_str, "Token")
     {
     }

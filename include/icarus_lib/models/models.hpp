@@ -6,9 +6,9 @@
 #include <chrono>
 #include <utility>
 
-#include "auth_models.hpp"
-#include "config_models.hpp"
-#include "music_models.hpp"
+#include "icarus_lib/models/auth_models.hpp"
+#include "icarus_lib/models/config_models.hpp"
+#include "icarus_lib/models/music_models.hpp"
 
 namespace icarus_lib::models
 {

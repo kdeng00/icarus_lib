@@ -42,13 +42,25 @@ find_package(cpr CONFIG REQUIRED)
 find_path(JWT_CPP_INCLUDE_DIRS "jwt-cpp/base.h")
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(unofficial-libmariadb CONFIG REQUIRED)
-find_package(SOCI CONFIG REQUIRED)
+# find_package(SOCI CONFIG REQUIRED)
 find_package(cryptopp CONFIG REQUIRED)
+
+
+set(SOCI_TESTS OFF CACHE BOOL "enable soci tests" FORCE)
+set(SOCI_EMPTY OFF CACHE BOOL "enable soci empty" FORCE)
+set(WITH_MYSQL ON CACHE BOOL "enable mysql" FORCE)
+set(WITH_ODBC OFF CACHE BOOL "enable ODBC" FORCE)
+set(WITH_SQLITE3 OFF CACHE BOOL "enable sqlite3" FORCE)
+set(WITH_BOOST OFF CACHE BOOL "enable boost" FORCE)
+set(WITH_DB2 OFF CACHE BOOL "enable DB2" FORCE)
+set(WITH_FIREBIRD OFF CACHE BOOL "enable firebird" FORCE)
+set(WITH_ORACLE OFF CACHE BOOL "enable oracle" FORCE)
+
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/3rdparty/soci)
 
 
 add_library(icarus_lib INTERFACE)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
 # Add tests
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
@@ -60,6 +72,19 @@ target_link_libraries(icarus_lib INTERFACE cpr)
 target_include_directories(icarus_lib INTERFACE ${JWT_CPP_INCLUDE_DIRS})
 target_link_libraries(icarus_lib INTERFACE nlohmann_json nlohmann_json::nlohmann_json)
 target_link_libraries(icarus_lib INTERFACE unofficial::libmariadb)
-target_link_libraries(icarus_lib INTERFACE SOCI::soci_core_static SOCI::soci_empty_static)
+# target_link_libraries(icarus_lib INTERFACE SOCI::soci_core_static SOCI::soci_empty_static)
+target_link_libraries(icarus_lib INTERFACE soci_core soci_mysql)
 target_link_libraries(icarus_lib INTERFACE cryptopp-static)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
+
+if(DEFINED CMAKE_EXPORT_COMPILE_COMMANDS)
+	if("${CMAKE_EXPORT_COMPILE_COMMANDS}" STREQUAL "ON")
+        message("Adding custom command")
+
+        add_custom_command(TARGET icarus PRE_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/compile_commands.json" "${CMAKE_SOURCE_DIR}/compile_commands.json"
+	        COMMENT "Copied the compile_commands.json file to project root"
+	    )
+	endif()
+endif()

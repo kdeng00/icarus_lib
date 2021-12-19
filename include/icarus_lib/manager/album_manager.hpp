@@ -1,12 +1,14 @@
+// TODO: Need to move away from the Icarus managers
+/**
 #ifndef ALBUMMANAGER_H_
 #define ALBUMMANAGER_H_
 
 #include <memory>
 
 // #include "icarus_lib/icarus.h"
-#include "manager/base_manager.hpp"
-#include "models/models.hpp"
-#include "repositories/database/cloud/album_repository.hpp"
+#include "icarus_lib/manager/base_manager.hpp"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/repositories/database/cloud/album_repository.hpp"
 
 namespace icarus_lib::manager {
 
@@ -37,3 +39,5 @@ private:
 }
 
 #endif
+
+*/

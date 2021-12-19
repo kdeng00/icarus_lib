@@ -33,6 +33,7 @@ enum class user_filter
 
 enum class token_filter
 {
+    ACCESS_TOKEN = 0
 };
 
 }

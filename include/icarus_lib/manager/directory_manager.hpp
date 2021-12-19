@@ -9,8 +9,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "models/models.hpp"
-#include "types/types.hpp"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/types/types.hpp"
 
 namespace icarus_lib::manager {
 

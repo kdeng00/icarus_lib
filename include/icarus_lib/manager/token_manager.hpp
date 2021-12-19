@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
+#include <chrono>
 
 #include <cpr/cpr.h>
 // #include <icarus_lib/icarus.h>
@@ -15,22 +16,27 @@
 #include <nlohmann/json.hpp>
 
 // #include "manager/managers.hpp"
-#include "manager/base_manager.hpp"
-#include "repositories/database/cloud/token_repository.hpp"
-#include "types/types.hpp"
+#include "icarus_lib/manager/base_manager.hpp"
+#include "icarus_lib/manager/directory_manager.hpp"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/repositories/database/cloud/token_repository.hpp"
+#include "icarus_lib/types/types.hpp"
+
+using icarus_lib::manager::base_manager;
 
 namespace icarus_lib::manager
 {
 
+template<class Token>
 class token_manager : public base_manager<models::binary_path>
 {
 public:
     token_manager() = default;
-    token_manager(models::binary_path &config) base_manager(config)
+    token_manager(models::binary_path &config) : base_manager(config)
     {
     }
 
-    models::token create_token(const models::binary_path &config, const models::user& usr)
+    Token create_token(const models::binary_path &config, const models::user& usr)
     {
         std::cout << "Fetching icarus key config\n";
         auto t = directory_manager::keyConfigContent(config);
@@ -41,12 +47,12 @@ public:
         auto private_key = directory_manager::contentOfPath(private_key_path);
         auto public_key = directory_manager::contentOfPath(public_key_path);
 
-        auto current_time = std::system_clock::now();
+        auto current_time = std::chrono::system_clock::now();
 
         auto scopes = all_scopes<std::string_view>();
         auto ss = all_scopes_spaced<std::string_view>(scopes);
 
-        token token;
+        Token token;
         token.issued = current_time;
         token.expires = current_time + hours(hours_till_expire());
 
@@ -69,8 +75,8 @@ public:
     }
 
 
-    template<typename scope = type::Scope, template <typename, typename> class token_result = std::pair>
-    auto is_token_valid(models::token &tokn, scope scp)
+    template<typename scope = types::scope, template <typename, typename> class token_result = std::pair>
+    auto is_token_valid(Token &tokn, scope scp)
     {
         token_result<bool, std::string> result;
 
@@ -105,7 +111,7 @@ public:
         return result;
     }
 
-    bool isTokenValid(std::string &auth, type::Scope scope)
+    bool isTokenValid(std::string &auth, types::scope scope)
     {
         auto authPair = fetchAuthHeader(auth);
 
@@ -123,27 +129,27 @@ public:
 
         switch (scope)
         {
-        case scope::upload:
+        case types::scope::UPLOAD:
             return tokenSupportsscope(scopes, "upload:songs");
-        case scope::download:
+        case types::scope::DOWNLOAD:
             return tokenSupportsscope(scopes, "download:songs");
-        case scope::stream:
+        case types::scope::STREAM:
             return tokenSupportsscope(scopes, "stream:songs");
-        case scope::deleteSong:
+        case types::scope::DELETE_SONG:
             return tokenSupportsscope(scopes, "delete:songs");
-        case scope::updateSong:
+        case types::scope::UPDATE_SONG:
             return tokenSupportsscope(scopes, "update:songs");
-        case scope::retrieveSong:
+        case types::scope::RETRIEVE_SONG:
             return tokenSupportsscope(scopes, "read:song_details");
-        case scope::retrieveAlbum:
+        case types::scope::RETRIEVE_ALBUM:
             return tokenSupportsscope(scopes, "read:albums");
-        case scope::retrieveArtist:
+        case types::scope::RETRIEVE_ARTIST:
             return tokenSupportsscope(scopes, "read:artists");
-        case scope::retrieveGenre:
+        case types::scope::RETRIEVE_GENRE:
             return tokenSupportsscope(scopes, "read:genre");
-        case scope::retrieveYear:
+        case types::scope::RETRIEVE_YEAR:
             return tokenSupportsscope(scopes, "read:year");
-        case scope::downloadCoverArt:
+        case types::scope::DOWNLOAD_COVER_ART:
             return tokenSupportsScope(scopes, "download:cover_art");
         default:
             break;
@@ -202,15 +208,15 @@ private:
 
 
     template<typename decode, template <typename,typename> class pair>
-    pair<bool, decode> is_token_verified(const models::token &tokn)
+    pair<bool, decode> is_token_verified(const Token &tokn)
     {
-        auto t = DirectoryManager::keyConfigContent(m_config);
+        auto t = directory_manager::keyConfigContent(m_config);
 
         std::string private_key_path(t["rsa_private_key_path"]);
         std::string public_key_path(t["rsa_public_key_path"]);
 
-        auto private_key = DirectoryManager::contentOfPath(private_key_path);
-        auto public_key = DirectoryManager::contentOfPath(public_key_path);
+        auto private_key = directory_manager::contentOfPath(private_key_path);
+        auto public_key = directory_manager::contentOfPath(public_key_path);
 
         auto verify = jwt::verify()
             .allow_algorithm(jwt::algorithm::rs256(public_key, private_key, "", ""

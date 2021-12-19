@@ -2,21 +2,22 @@
 #define ICARUS_H_
 
 #include <string>
+#include <chrono>
 #include <vector>
 
 // #include "icarus.h"
-#include "models/models.hpp"
+#include "icarus_lib/models/models.hpp"
 // #include "types/auth.hpp"
 // #include "types/music.hpp"
-#include "types/types.hpp"
+#include "icarus_lib/types/types.hpp"
 
-#include "repositories/database/cloud/album_repository.hpp"
-#include "repositories/database/cloud/artist_repository.hpp"
-#include "repositories/database/cloud/cover_art_repository.hpp"
-#include "repositories/database/cloud/genre_repository.hpp"
-#include "repositories/database/cloud/song_repository.hpp"
-#include "repositories/database/cloud/token_repository.hpp"
-#include "repositories/database/cloud/user_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/album_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/artist_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/cover_art_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/genre_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/song_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/token_repository.hpp"
+#include "icarus_lib/repositories/database/cloud/user_repository.hpp"
 
 namespace icarus_lib
 {
@@ -53,6 +54,8 @@ using cover_art_filter = types::cover_filter;
 using token_filter = types::token_filter;
 using user_filter = types::user_filter;
 using salt_filter = types::salt_filter;
+
+using scope = types::scope;
 
 using path_type = types::path_type;
 
