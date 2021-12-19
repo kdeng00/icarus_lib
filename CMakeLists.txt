@@ -1,8 +1,11 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.18)
 
 
 if(NOT DEFINED VCPKG_ROOT_PATH)
     set(VCPKG_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/vcpkg)
+    set(CMAKE_TOOLCHAIN_FILE
+        "${VCPKG_ROOT_PATH}/scripts/buildsystems/vcpkg.cmake"
+        CACHE STRING "Vcpkg toolchain file")
 endif()
 
 message("The vcpkg root path ${VCPKG_ROOT_PATH}")
@@ -32,7 +35,7 @@ endif()
 project(icarus_lib VERSION "0.0.1" DESCRIPTION "Library used to power the icarus api")
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 
 
@@ -40,9 +43,12 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 
-set(VCPKG_INCLUDE_DIR "${VCPKG_ROOT_PATH}/installed/${VCPKG_TRIPLET}/include")
+set(VCPKG_INCLUDE_DIR "${VCPKG_ROOT_PATH}/installed/${VCPKG_TRIPLET}/include" CACHE STRING "vcpkg library includes")
 message("including ${VCPKG_INCLUDE_DIR}")
 include_directories(${VCPKG_INCLUDE_DIR})
+
+# include_directories(${VCPKG_INCLUDE_DIR} ${VCPKG_INCLUDE_DIR}/mysql)
+# include_directories(${VCPKG_INCLUDE_DIR}/jwt-cpp ${VCPKG_INCLUDE_DIR}/cpr ${VCPKG_INCLUDE_DIR}/nlohmann ${VCPKG_INCLUDE_DIR}/curl)
 include_directories(${CMAKE_BINARY_DIR}/include/3rdparty/soci/include)
 
 
@@ -51,7 +57,8 @@ find_package(CURL CONFIG REQUIRED)
 find_package(cpr CONFIG REQUIRED)
 find_path(JWT_CPP_INCLUDE_DIRS "jwt-cpp/base.h")
 find_package(nlohmann_json CONFIG REQUIRED)
-find_package(unofficial-libmariadb CONFIG REQUIRED)
+# find_package(unofficial-libmariadb CONFIG REQUIRED)
+# find_package(libmysql REQUIRED)
 # find_package(SOCI CONFIG REQUIRED)
 find_package(cryptopp CONFIG REQUIRED)
 
@@ -69,7 +76,7 @@ set(WITH_ORACLE OFF CACHE BOOL "enable oracle" FORCE)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci)
 
 set(SOURCES
-    src/icarus.cpp)
+    src/icarus_lib/icarus.cpp)
 
 
 add_library(icarus_lib SHARED ${SOURCES})
@@ -84,9 +91,11 @@ target_link_libraries(icarus_lib PRIVATE CURL::libcurl)
 target_link_libraries(icarus_lib PRIVATE cpr)
 target_include_directories(icarus_lib PRIVATE ${JWT_CPP_INCLUDE_DIRS})
 target_link_libraries(icarus_lib PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
-target_link_libraries(icarus_lib PRIVATE unofficial::libmariadb)
-target_link_libraries(icarus_lib PRIVATE soci_core soci_mysql)
+# target_link_libraries(icarus_lib PRIVATE unofficial::libmariadb)
 target_link_libraries(icarus_lib PRIVATE cryptopp-static)
+# target_link_libraries(icarus_lib PRIVATE ${MYSQL_LIBRARIES})
+target_link_libraries(icarus_lib PRIVATE soci_core soci_mysql)
+
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
 
