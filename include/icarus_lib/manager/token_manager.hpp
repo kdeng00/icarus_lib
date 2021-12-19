@@ -10,8 +10,8 @@
 #include <cstdlib>
 #include <chrono>
 
-#include <cpr/cpr.h>
-#include <jwt-cpp/jwt.h>
+#include "cpr/cpr.h"
+#include "jwt-cpp/jwt.h"
 #include <nlohmann/json.hpp>
 
 // #include "manager/managers.hpp"
@@ -22,7 +22,7 @@
 // #include "icarus_lib/repositories/database/cloud/token_repository.hpp"
 #include "icarus_lib/types/types.hpp"
 
-using icarus_lib::manager::base_manager;
+// using icarus_lib::manager::base_manager;
 
 namespace icarus_lib::manager
 {
@@ -39,13 +39,13 @@ public:
     Token create_token(const models::binary_path &config, const models::user& usr)
     {
         std::cout << "Fetching icarus key config\n";
-        auto t = manager::directory_manager::keyConfigContent(config);
+        auto t = manager::directory_manager_t::keyConfigContent(config);
 
         std::string private_key_path(t["rsa_private_key_path"]);
         std::string public_key_path(t["rsa_public_key_path"]);
 
-        auto private_key = manager::directory_manager::contentOfPath(private_key_path);
-        auto public_key = manager::directory_manager::contentOfPath(public_key_path);
+        auto private_key = manager::directory_manager_t::contentOfPath(private_key_path);
+        auto public_key = manager::directory_manager_t::contentOfPath(public_key_path);
 
         auto current_time = std::chrono::system_clock::now();
 
@@ -67,8 +67,10 @@ public:
 
         token.access_token = tok;
 
-        database::token_repository repo(config);
+        /**
+        icarus_lib::database::token_repository repo(config);
         repo.create_token(token, usr);
+        */
 
 
         return token;
@@ -211,13 +213,13 @@ private:
     template<typename decode, template <typename,typename> class pair>
     pair<bool, decode> is_token_verified(const Token &tokn)
     {
-        auto t = manager::directory_manager::keyConfigContent(m_config);
+        auto t = manager::directory_manager_t::keyConfigContent(m_config);
 
         std::string private_key_path(t["rsa_private_key_path"]);
         std::string public_key_path(t["rsa_public_key_path"]);
 
-        auto private_key = manager::directory_manager::contentOfPath(private_key_path);
-        auto public_key = manager::directory_manager::contentOfPath(public_key_path);
+        auto private_key = manager::directory_manager_t::contentOfPath(private_key_path);
+        auto public_key = manager::directory_manager_t::contentOfPath(public_key_path);
 
         auto verify = jwt::verify()
             .allow_algorithm(jwt::algorithm::rs256(public_key, private_key, "", ""

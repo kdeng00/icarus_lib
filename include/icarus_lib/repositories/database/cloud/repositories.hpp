@@ -23,8 +23,7 @@ using album_repository = icarus_lib::repositories::database::cloud::album_reposi
 using artist_repository = icarus_lib::repositories::database::cloud::artist_repository<models::artist, types::artist_filter, models::conn_string>;
 using cover_art_repository = icarus_lib::repositories::database::cloud::cover_art_repository<models::cover_art, types::cover_filter, models::conn_string>;
 using genre_repository = icarus_lib::repositories::database::cloud::genre_repository<models::genre, types::genre_filter, models::conn_string>;
-using user_repository = icarus_lib::repositories::database::cloud::user_repository<models::user, models::pass_sec, 
-    types::salt_filter, types::user_filter, models::conn_string>;
+using user_repository = icarus_lib::repositories::database::cloud::user_repository<models::user, models::pass_sec, types::salt_filter, types::user_filter, models::conn_string>;
 }
 
 

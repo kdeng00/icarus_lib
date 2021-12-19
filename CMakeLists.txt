@@ -36,6 +36,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 
+
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+
+set(VCPKG_INCLUDE_DIR "${VCPKG_ROOT_PATH}/installed/${VCPKG_TRIPLET}/include")
+message("including ${VCPKG_INCLUDE_DIR}")
+include_directories(${VCPKG_INCLUDE_DIR})
+include_directories(${CMAKE_BINARY_DIR}/include/3rdparty/soci/include)
+
+
 find_package(OpenSSL REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(cpr CONFIG REQUIRED)
@@ -45,8 +55,6 @@ find_package(unofficial-libmariadb CONFIG REQUIRED)
 # find_package(SOCI CONFIG REQUIRED)
 find_package(cryptopp CONFIG REQUIRED)
 
-include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)
-include_directories(${CMAKE_BINARY_DIR}/include/3rdparty/soci/include)
 
 set(SOCI_TESTS OFF CACHE BOOL "enable soci tests" FORCE)
 set(SOCI_EMPTY OFF CACHE BOOL "enable soci empty" FORCE)
@@ -60,23 +68,25 @@ set(WITH_ORACLE OFF CACHE BOOL "enable oracle" FORCE)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci)
 
+set(SOURCES
+    src/icarus.cpp)
 
-add_library(icarus_lib INTERFACE)
+
+add_library(icarus_lib SHARED ${SOURCES})
 
 # Add tests
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
-target_include_directories(icarus_lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
+# target_include_directories(icarus_lib INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
 
-target_link_libraries(icarus_lib INTERFACE OpenSSL::SSL OpenSSL::Crypto)
-target_link_libraries(icarus_lib INTERFACE CURL::libcurl)
-target_link_libraries(icarus_lib INTERFACE cpr)
-target_include_directories(icarus_lib INTERFACE ${JWT_CPP_INCLUDE_DIRS})
-target_link_libraries(icarus_lib INTERFACE nlohmann_json nlohmann_json::nlohmann_json)
-target_link_libraries(icarus_lib INTERFACE unofficial::libmariadb)
-# target_link_libraries(icarus_lib INTERFACE SOCI::soci_core_static SOCI::soci_empty_static)
-target_link_libraries(icarus_lib INTERFACE soci_core soci_mysql)
-target_link_libraries(icarus_lib INTERFACE cryptopp-static)
+target_link_libraries(icarus_lib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(icarus_lib PRIVATE CURL::libcurl)
+target_link_libraries(icarus_lib PRIVATE cpr)
+target_include_directories(icarus_lib PRIVATE ${JWT_CPP_INCLUDE_DIRS})
+target_link_libraries(icarus_lib PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
+target_link_libraries(icarus_lib PRIVATE unofficial::libmariadb)
+target_link_libraries(icarus_lib PRIVATE soci_core soci_mysql)
+target_link_libraries(icarus_lib PRIVATE cryptopp-static)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
 

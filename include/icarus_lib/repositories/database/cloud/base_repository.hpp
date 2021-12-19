@@ -12,11 +12,11 @@
 
 #include <mysql/mysql.h>
 #include <nlohmann/json.hpp>
-#include <soci/soci.h>
-#include <soci/soci-backend.h>
+// #include <soci/soci.h>
+// #include <soci/soci-backend.h>
 // #include <soci/mysql/soci-mysql.h>
 
-#include "icarus_lib/manager/managers.hpp"
+// #include "icarus_lib/manager/managers.hpp"
 #include "icarus_lib/models/models.hpp"
 
 namespace icarus_lib::repositories::database::cloud {
@@ -39,13 +39,13 @@ protected:
     }
     base_repository(const models::binary_path &bConf, const std::string &table_name) : m_bConf(bConf), table_name(table_name)
     {
-        intitalizeBase<models::binary_path, icarus_lib::manager::directory_manager>(bConf);
+        // intitalizeBase<models::binary_path, icarus_lib::manager::directory_manager>(bConf);
     }
 
     template<class Config, class Mgr>
     void intitalizeBase(const Config &bConf)
     {
-        auto config = Mgr::databaseConfigContent(bConf);
+        // auto config = Mgr::databaseConfigContent(bConf);
         // TODO: Build issue
         /**
         this->details.database = config["database"].get<std::string>();
@@ -69,11 +69,13 @@ protected:
         return true;
     }
 
+    /**
     void create_connection(soci::session &conn)
     {
         auto conn_string = generate_connection_string();
         conn.open("mysql", conn_string);
     }
+    */
 
 
     std::string generate_connection_string() noexcept

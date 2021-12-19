@@ -46,7 +46,7 @@ public:
             std::filesystem::create_directory(albPath);
         }
 
-        auto discPath = directory_manager().relativeDiscSongPathFilesystem(albPath, song);
+        auto discPath = directory_manager_t().relativeDiscSongPathFilesystem(albPath, song);
 
         if (std::filesystem::exists(discPath)) {
             std::cout << "disc path exists\n";
@@ -88,7 +88,7 @@ public:
             std::filesystem::create_directory(albPath);
         }
 
-        auto discPath = directory_manager().relativeDiscSongPathFilesystem(albPath, song);
+        auto discPath = directory_manager_t().relativeDiscSongPathFilesystem(albPath, song);
         if (std::filesystem::exists(discPath)) {
             std::cout << "disc path exists\n";
         } else {

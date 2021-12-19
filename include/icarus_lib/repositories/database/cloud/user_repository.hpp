@@ -7,10 +7,7 @@
 #include "icarus_lib/repositories/database/cloud/base_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-using icarus_lib::database::repository_utility;
-using icarus_lib::database::base_repository;
-
-namespace icarus_lib::database {
+namespace icarus_lib::repositories::database::cloud {
 
 template<class User, class PassSec, typename SaltFilter, typename Filter, class ConnStr>
 class user_repository : public base_repository<ConnStr>

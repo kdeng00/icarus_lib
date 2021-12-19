@@ -14,7 +14,7 @@
 #include "icarus_lib/repositories/database/cloud/base_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-namespace icarus_lib::repositores::database::cloud {
+namespace icarus_lib::repositories::database::cloud {
 
 template<class Artist, typename Filter, class ConnStr>
 class artist_repository : public base_repository<ConnStr>

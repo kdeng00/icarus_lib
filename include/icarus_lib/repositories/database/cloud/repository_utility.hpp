@@ -8,7 +8,7 @@
 
 #include <mysql/mysql.h>
 
-namespace icarus_lib::database {
+namespace icarus_lib::repositories::database::cloud {
 
 class repository_utility
 {

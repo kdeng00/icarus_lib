@@ -14,9 +14,6 @@
 #include "icarus_lib/repositories/database/cloud/base_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/repository_utility.hpp"
 
-using icarus_lib::repositories::database::cloud::base_repository;
-using icarus_lib::repositories::database::cloud::repository_utility;
-
 namespace icarus_lib::repositories::database::cloud {
 
 template<class Cover, typename Filter, class ConnStr>
