@@ -1,12 +1,16 @@
 #ifndef CONFIG_MODELS_H_
 #define CONFIG_MODELS_H_
 
+#include <memory>
+
 
 namespace icarus_lib::models
 {
     template<typename str_val>
     class database_connection_type {
     public:
+        database_connection_type() = default;
+
         str_val host;
         str_val username;
         str_val password;
@@ -20,7 +24,7 @@ namespace icarus_lib::models
         binary_path_type() = default;
         binary_path_type(const char *p) : path(p) { }
         binary_path_type(const str_val& p) : path(p) { }
-        binary_path_type(str_val&& p) : path(std::move(p)) { }
+        // binary_path_type(str_val&& p) : path(std::move(p)) { }
 
         str_val path;
     };

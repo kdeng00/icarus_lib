@@ -13,15 +13,16 @@
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 
 namespace icarus_lib { namespace database {
-template<class Artist, typename Filter, class ConnStr>
-class artist_repository : public base_repository<ConnStr>
+
+template<class Artist, typename Filter>
+class artist_repository : public base_repository
 {
 public:
-    artist_repository(const ConnStr &conn_str) : base_repository<ConnStr>(conn_str)
+    artist_repository(const models::conn_string &conn_str) : base_repository(conn_str)
     {
     }
     artist_repository(const models::binary_path &conn_str, const std::string tablename = "Artist") : 
-        base_repository<ConnStr>(conn_str, tablename)
+        base_repository(conn_str, tablename)
     {
     }
 

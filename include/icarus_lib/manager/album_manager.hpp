@@ -4,9 +4,9 @@
 #include <memory>
 
 // #include "icarus_lib/icarus.h"
-#include "manager/base_manager.hpp"
-#include "models/models.hpp"
-#include "repositories/database/cloud/album_repository.hpp"
+#include "icarus_lib/manager/base_manager.hpp"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/repositories/database/cloud/album_repository.hpp"
 
 namespace icarus_lib::manager {
 
@@ -24,10 +24,10 @@ public:
 
         return album;
     }
-    Album saveAlbum(const icarus_lib::song&);
+    Album saveAlbum(const models::song&);
 
-    void deleteAlbum(const icarus_lib::song&);
-    void updateAlbum(icarus_lib::song&, const icarus_lib::song&);
+    void deleteAlbum(const models::song&);
+    void updateAlbum(models::song&, const models::song&);
 
     static void printAlbum(const Album&);
 private:

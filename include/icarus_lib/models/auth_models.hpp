@@ -59,7 +59,10 @@ public:
 };
 
 template<typename str_val, typename int_val>
-struct user_type {
+class user_type {
+public:
+    user_type() = default;
+
     int id;
     str_val firstname;
     str_val lastname;
@@ -72,7 +75,10 @@ struct user_type {
 };
 
 template<typename str_val, typename int_val>
-struct pass_sec_type {
+class pass_sec_type {
+public:
+    pass_sec_type() = default;
+
     int_val id;
     str_val hash_password;
     str_val salt;
@@ -80,7 +86,10 @@ struct pass_sec_type {
 };
 
 template<typename str_val>
-struct auth_credentials_type {
+class auth_credentials_type {
+public:
+    auth_credentials_type() = default;
+
     str_val domain;
     str_val api_identifier;
     str_val client_id;
@@ -88,6 +97,7 @@ struct auth_credentials_type {
     str_val uri;
     str_val endpoint;
 };
+
 }
 
 

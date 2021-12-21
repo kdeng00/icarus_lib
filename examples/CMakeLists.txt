@@ -9,7 +9,7 @@ message("Root of icarus_lib ${ICARUS_LIB_ROOT}")
 set(ICARUS_LIB_INCLUDE "${ICARUS_LIB_ROOT}/include") 
 message("icarus_lib include ${ICARUS_LIB_INCLUDE}")
 
-include_directories(${ICARUS_LIB_INCLUDE} ${ICARUS_LIB_ROOT}/examples)
+include_directories(${ICARUS_LIB_INCLUDE} ${ICARUS_LIB_ROOT}/examples ${ICARUS_LIB_ROOT}/../examples)
 
 set(ICARUS_LIB_BUILD_OUTPUT ${CMAKE_BINARY_DIR}/subdirs)
 
@@ -17,23 +17,23 @@ set(ICARUS_LIB_BUILD_OUTPUT ${CMAKE_BINARY_DIR}/subdirs)
 
 set(EXAMPLES
     create_songs
-    create_tokens
+    # create_tokens
     create_users
-    delete_songs
-    delete_tokens
-    delete_users
-    fetch_albums
-    fetch_artists
-    fetch_genres
-    fetch_songs
-    fetch_tokens
-    fetch_users
-    update_albums
-    update_artists
-    update_coverarts
-    update_genres
-    update_songs
-    update_users
+    # delete_songs
+    # delete_tokens
+    # delete_users
+    # fetch_albums
+    # fetch_artists
+    # fetch_genres
+    # fetch_songs
+    # fetch_tokens
+    # fetch_users
+    # update_albums
+    # update_artists
+    # update_coverarts
+    # update_genres
+    # update_songs
+    # update_users
 )
 
 foreach (example ${EXAMPLES})

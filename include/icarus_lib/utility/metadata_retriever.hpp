@@ -2,17 +2,19 @@
 #define METADATA_RETRIEVER_H_
 
 #include <iostream>
+#include <filesystem>
 #include <string>
 
 #include <taglib/attachedpictureframe.h>
-#include <taglib/textidentificationframe.h>
 #include <taglib/fileref.h>
+#include <taglib/id3v2tag.h>
 #include <taglib/mpegfile.h>
 #include <taglib/tag.h>
+#include <taglib/textidentificationframe.h>
 
-#include "image_file.hpp"
-#include "models/models.hpp"
-#include "manager/managers.hpp"
+#include "icarus_lib/utility/image_file.hpp"
+#include "icarus_lib/models/models.hpp"
+#include "icarus_lib/manager/managers.hpp"
 
 namespace icarus_lib::utility {
 
@@ -70,12 +72,12 @@ public:
 		if (frameList.isEmpty()) {
 		    cov.image_path.append("CoverArt.png");
         
-		    if (!fs::exists(cov.image_path)) {
+		    if (!std::filesystem::exists(cov.image_path)) {
 		        std::cout << "copying stock cover path\n";
-		        fs::copy(stockCoverPath, cov.image_path);
+		        std::filesystem::copy(stockCoverPath, cov.image_path);
 		    }
 
-		    image_file stockImg(cov.image_path.c_str());
+		    icarus_lib::utility::image_file stockImg(cov.image_path.c_str());
 
 		    TagLib::ID3v2::AttachedPictureFrame *pic = 
 				    new TagLib::ID3v2::AttachedPictureFrame;
@@ -90,7 +92,7 @@ public:
 		    auto frame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame*>(
 		            frameList.front());
         
-		    auto imgPath = manager::DirectoryManager::createDirectoryProcess(song, cov.image_path);
+		    auto imgPath = manager::directory_manager::createDirectoryProcess(song, cov.image_path);
 		    imgPath.append(song.title);
 		    imgPath.append(".png");
 		    cov.image_path = imgPath;
@@ -110,7 +112,7 @@ public:
         TagLib::MPEG::File songFile(song.song_path.c_str());
 		auto tag = songFile.ID3v2Tag();
 
-		image_file stockImg(cov.image_path.c_str());
+		icarus_lib::utility::image_file stockImg(cov.image_path.c_str());
 		TagLib::ID3v2::AttachedPictureFrame *pic = 
 				new TagLib::ID3v2::AttachedPictureFrame;
 
@@ -155,7 +157,7 @@ public:
 		return !frameList.isEmpty();
     }
 
-    void update_metadata(models::song &sngUpdated, const models::song &sngOld)
+    void update_metadata(icarus_lib::models::song &sngUpdated, const icarus_lib::models::song &sngOld)
     {
         std::cout << "updating metadata\n";
 		TagLib::MPEG::File file(sngOld.song_path.c_str());

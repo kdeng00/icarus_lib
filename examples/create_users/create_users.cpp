@@ -12,10 +12,10 @@ using pass_sec = icarus_lib::pass_sec;
 
 
 user test_user(const string firstname = "David", const string lastname = "Bowie",
-    const string &email = "kdeedeng@yahoo.com", const string& phone = "999-333-2321",
-    const string &username = "dbowie84", const string &password = "thisisatest") noexcept
+    const string email = "kdeedeng@yahoo.com", const string phone = "999-333-2321",
+    const string username = "dbowie84", const string password = "thisisatest") noexcept
 {
-    auto usr = icarus_lib::user();
+    icarus_lib::user usr;
     usr.firstname = firstname;
     usr.lastname = lastname;
     usr.username = username;
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     const std::string name("create_users");
     example::count_check(argc, name);
 
-    const auto conn_str = example::test_connection_string<conn_string>(argv);
+    const auto conn_str = example::test_connection_string<icarus_lib::conn_string>(argv);
     auto user_repo = icarus_lib::user_repository(conn_str);
     auto usr = test_user();
 

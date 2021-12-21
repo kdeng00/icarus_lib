@@ -10,8 +10,6 @@
 #include <cstring>
 #include <ctime>
 
-#include <mysql/mysql.h>
-
 #include "icarus_lib/models/models.hpp"
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 #include "icarus_lib/repositories/database/cloud/repository_utility.h"
@@ -19,18 +17,19 @@
 using icarus_lib::database::base_repository;
 
 
-namespace icarus_lib::repositories::database::cloud {
+// namespace icarus_lib::repositories::database::cloud {
+namespace icarus_lib::database {
 
-template<class Token, typename Filter, class ConnStr>
-class token_repository : public base_repository<ConnStr>
+template<typename Token, typename Filter>
+class token_repository : public base_repository
 {
 public:
-    token_repository(const ConnStr &conn_str, const std::string table = "Token") : 
-         base_repository<ConnStr>(conn_str, table)
+    token_repository(const models::conn_string &conn_str, const std::string table = "Token") : 
+         base_repository(conn_str, table)
     {
     }
     token_repository(const models::binary_path &conn_str, const std::string table = "Token") : 
-         base_repository<ConnStr>(conn_str, table) 
+         base_repository(conn_str, table) 
     {
     }
 
@@ -39,19 +38,19 @@ public:
     Container retrieve_all_tokens()
     {
         auto conn = this->setup_connection();
-        auto stmt = mysql_stmt_init(conn);
+        auto stmt = ::mysql_stmt_init(conn);
 
         std::stringstream qry;
         qry << "SELECT * FROM " << this->table_name;
         const auto query = qry.str();
 
-        mysql_stmt_prepare(stmt, query.c_str(), query.size());
-        mysql_stmt_execute(stmt);
+        ::mysql_stmt_prepare(stmt, query.c_str(), query.size());
+        ::mysql_stmt_execute(stmt);
 
         auto contr = parse_records<Container>(stmt);
 
-        mysql_stmt_close(stmt);
-        mysql_close(conn);
+        ::mysql_stmt_close(stmt);
+        ::mysql_close(conn);
 
         return contr;
     }
@@ -61,7 +60,7 @@ public:
     {
         std::stringstream qry;
         auto conn = this->setup_connection();
-        auto stmt = mysql_stmt_init(conn);
+        auto stmt = ::mysql_stmt_init(conn);
 
         auto valueFilterCount = 1;
 
@@ -75,14 +74,14 @@ public:
         params[0].is_null = 0;
 
         const auto query = qry.str();
-        auto status = mysql_stmt_prepare(stmt, query.c_str(), query.size());
-        status = mysql_stmt_bind_param(stmt, params);
-        status = mysql_stmt_execute(stmt);
+        auto status = ::mysql_stmt_prepare(stmt, query.c_str(), query.size());
+        status = ::mysql_stmt_bind_param(stmt, params);
+        status = ::mysql_stmt_execute(stmt);
 
         auto token = parseRecord(stmt);
 
-        mysql_stmt_close(stmt);
-        mysql_close(conn);
+        ::mysql_stmt_close(stmt);
+        ::mysql_close(conn);
 
         return tokn;
     }
@@ -90,11 +89,8 @@ public:
 
     int create_token(const Token &tokn)
     {
-        using std::chrono::system_clock;
-        using std::tm;
-
         auto conn = this->setup_connection();
-        auto stmt = mysql_stmt_init(conn);
+        auto stmt = ::mysql_stmt_init(conn);
 
         std::stringstream buff;
         buff << "INSERT INTO " << this->table_name << " (AccessToken, ";
@@ -105,7 +101,7 @@ public:
 
         const auto query = buff.str();
 
-        auto status = mysql_stmt_prepare(stmt, query.c_str(), query.size());
+        auto status = ::mysql_stmt_prepare(stmt, query.c_str(), query.size());
 
         MYSQL_BIND params[3];
         memset(params, 0, sizeof(params));
@@ -128,18 +124,20 @@ public:
         params[2].is_null = 0;
 
 
-        auto issued = this->convert_time_point_to_tm<std::chrono::system_clock::time_point,
+        /**
+        auto issued = convert_time_point_to_tm<std::chrono::system_clock::time_point,
             std::tm>(tokn.issued);
-        auto expires = this->convert_time_point_to_tm<std::chrono::system_clock::time_point,
+        auto expires = convert_time_point_to_tm<std::chrono::system_clock::time_point,
             std::tm>(tokn.expires);
+        */
 
-        status = mysql_stmt_bind_param(stmt, params);
-        status = mysql_stmt_execute(stmt);
-        mysql_stmt_store_result(stmt);
-        const auto rows_affected = mysql_stmt_num_rows(stmt);
+        status = ::mysql_stmt_bind_param(stmt, params);
+        status = ::mysql_stmt_execute(stmt);
+        ::mysql_stmt_store_result(stmt);
+        const auto rows_affected = ::mysql_stmt_num_rows(stmt);
 
-        mysql_stmt_close(stmt);
-        mysql_close(conn);
+        ::mysql_stmt_close(stmt);
+        ::mysql_close(conn);
 
 
         return rows_affected;
@@ -154,7 +152,7 @@ public:
        qry << "DELETE FROM Token WHERE TokenId = " + tokn.id;
        auto result = perform_query(conn, qry.str());
 
-       mysql_close(conn);
+       ::mysql_close(conn);
 
 
         return result == 0 ? true : false;
@@ -165,7 +163,7 @@ public:
     {
         std::stringstream qry;
         auto conn = this->setup_connection();
-        auto stmt = mysql_stmt_init(conn);
+        auto stmt = ::mysql_stmt_init(conn);
 
         auto valueFilterCount = 1;
 
@@ -179,15 +177,15 @@ public:
         params[0].is_null = 0;
 
         const auto query = qry.str();
-        auto status = mysql_stmt_prepare(stmt, query.c_str(), query.size());
-        status = mysql_stmt_bind_param(stmt, params);
-        status = mysql_stmt_execute(stmt);
+        auto status = ::mysql_stmt_prepare(stmt, query.c_str(), query.size());
+        status = ::mysql_stmt_bind_param(stmt, params);
+        status = ::mysql_stmt_execute(stmt);
 
-        mysql_stmt_store_result(stmt);
-        const auto rowcount = mysql_stmt_num_rows(stmt);
+        ::mysql_stmt_store_result(stmt);
+        const auto rowcount = ::mysql_stmt_num_rows(stmt);
 
-        mysql_stmt_close(stmt);
-        mysql_close(conn);
+        ::mysql_stmt_close(stmt);
+        ::mysql_close(conn);
 
         return rowcount > 0 ? true : false;
     }
@@ -196,14 +194,14 @@ public:
 private:
     Token parseRecord(MYSQL_STMT *stmt)
     {
-        mysql_stmt_store_result(stmt);
-        std::cout << "amount of rows: " << mysql_stmt_num_rows(stmt) << "\n";
+        ::mysql_stmt_store_result(stmt);
+        std::cout << "amount of rows: " << ::mysql_stmt_num_rows(stmt) << "\n";
 
         Token token;
         auto metaBuff = metadataBuffer();
         auto bindedValues = valueBind(token, metaBuff);
-        auto status = mysql_stmt_bind_result(stmt, bindedValues.get());
-        status = mysql_stmt_fetch(stmt);
+        auto status = ::mysql_stmt_bind_result(stmt, bindedValues.get());
+        status = ::mysql_stmt_fetch(stmt);
 
         token.access_token = std::get<0>(metaBuff);
         token.token_type = std::get<1>(metaBuff);
@@ -215,8 +213,8 @@ private:
     template<typename Container>
     Container parse_records(MYSQL_STMT *stmt)
     {
-        mysql_stmt_store_result(stmt);
-        const auto rowCount = mysql_stmt_num_rows(stmt);
+        ::mysql_stmt_store_result(stmt);
+        const auto rowCount = ::mysql_stmt_num_rows(stmt);
         std::cout << "number of results " << rowCount << "\n";
 
         Container tokens;
@@ -224,17 +222,17 @@ private:
 
         constexpr auto valAmt = 3;
 
-        for(auto status = 0; status == 0; status = mysql_stmt_next_result(stmt))
+        for(auto status = 0; status == 0; status = ::mysql_stmt_next_result(stmt))
         {
-            if(mysql_stmt_field_count(stmt) > 0)
+            if(::mysql_stmt_field_count(stmt) > 0)
             {
                 Token token;
                 auto metaBuff = metadataBuffer();
                 auto bindedValues = valueBind(token, metaBuff);
-                status = mysql_stmt_bind_result(stmt, bindedValues.get());
+                status = ::mysql_stmt_bind_result(stmt, bindedValues.get());
 
                 std::cout << "fetching statement result\n";
-                status = mysql_stmt_fetch(stmt);
+                status = ::mysql_stmt_fetch(stmt);
 
                 if(status == 1 || status == MYSQL_NO_DATA) break;
 

@@ -1,6 +1,5 @@
 #include "example.hpp"
-
-using namespace std;
+#include "icarus_lib/icarus.hpp"
 
 template<class Token, typename Container = std::vector<Token>>
 Container test_tokens()
@@ -27,7 +26,7 @@ int main(int argc, char **argv)
 {
     const string name("create_tokens");
     example::count_check(argc, name);
-    const auto conn_str = example::test_connection_string<icarus_lib::models::conn_string>(argv);
+    const auto conn_str = example::test_connection_string<icarus_lib::conn_string>(argv);
 
     auto token_repo = icarus_lib::token_repository(conn_str);
     const auto tokens = test_tokens<icarus_lib::token>();

@@ -13,15 +13,15 @@
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 
 namespace icarus_lib { namespace database {
-template<class Cover, typename Filter, class ConnStr>
-class cover_art_repository : public base_repository<ConnStr>
+template<class Cover, typename Filter>
+class cover_art_repository : public base_repository
 {
 public:
-    cover_art_repository(const ConnStr &conn_str) : base_repository<ConnStr>(conn_str)
+    cover_art_repository(const models::conn_string &conn_str) : base_repository(conn_str)
     {
     }
     cover_art_repository(const models::binary_path &conn_str, const std::string tablename) : 
-        base_repository<ConnStr>(conn_str, tablename)
+        base_repository(conn_str, tablename)
     {
     }
 
@@ -34,7 +34,7 @@ public:
         mysql_stmt_prepare(stmt, query.c_str(), query.size());
         mysql_stmt_execute(stmt);
 
-        auto cover_arts = parse_records(stmt);
+        auto cover_arts = this->parse_records(stmt);
 
         mysql_stmt_close(stmt);
         mysql_close(conn);

@@ -7,16 +7,20 @@
 #include <vector>
 
 
-#include "icarus_lib/icarus.hpp"
+// #include "icarus_lib/icarus.hpp"
 
-using icarus_lib::conn_string;
+// using icarus_lib::conn_string;
+
+using namespace std;
+
 
 namespace example {
+
 
 template<typename ConnString>
 ConnString test_connection_string(char **argv)
 {
-    auto conn_str = ConnString();
+    ConnString conn_str;
     conn_str.host = argv[1];
     conn_str.database = argv[2];
     conn_str.username = argv[3];

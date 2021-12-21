@@ -32,6 +32,7 @@ using auth_credentials = auth_credentials_type<std::string>;
 
 using database_connection = database_connection_type<std::string>;
 using conn_string = database_connection_type<std::string>;
+using conn_str = database_connection_type<std::string>;
 using binary_path = binary_path_type<std::string>;
 
 }
