@@ -3,10 +3,9 @@
 
 ## Built with
 
-* C++ - With some C++ 17 features
+* C++
 * nlohmann json
 * taglib
-* boost
 * cpr
 * curl
 * openssl
@@ -14,7 +13,6 @@
 * cryptopp
 * libmariadb
 * catch2
-* soci
 
 
 ## Getting started
@@ -40,7 +38,7 @@ Installing dependencies
 
 ```BASH
 cd include/3rdparty/vcpkg
-./vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp boost libmariadb catch2 soci cryptopp
+./vcpkg install nlohmann-json curl openssl cpr taglib jwt-cpp libmariadb catch2 cryptopp
 ```
 
 Building library

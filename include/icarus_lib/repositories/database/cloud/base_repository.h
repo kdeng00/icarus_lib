@@ -30,14 +30,6 @@ protected:
 
     bool test_connection();
 
-    /**
-    void create_connection(soci::session &conn)
-    {
-        auto conn_string = generate_connection_string();
-        conn.open("mysql", conn_string);
-    }
-    */
-
 
     std::string generate_connection_string() noexcept;
 

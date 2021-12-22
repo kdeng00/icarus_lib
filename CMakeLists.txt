@@ -44,8 +44,13 @@ message("icarus_lib root ${ICARUS_LIB_ROOT}")
 
 set(SOURCES
     ${ICARUS_LIB_ROOT}/src/icarus_lib/utility/image_file.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/album_repository.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/artist_repository.cpp
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/base_repository.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/cover_art_repository.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/genre_repository.cpp
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/song_repository.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/token_repository.cpp
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/user_repository.cpp)
 
 
@@ -96,14 +101,12 @@ add_library(icarus_lib SHARED ${SOURCES})
 
 # target_include_directories(icarus_lib PRIVATE ${CMAKE_CURRENT_LIST_DIR}/include)
 
+target_include_directories(icarus_lib PRIVATE ${JWT_CPP_INCLUDE_DIRS})
 target_link_libraries(icarus_lib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 target_link_libraries(icarus_lib PRIVATE CURL::libcurl)
 target_link_libraries(icarus_lib PRIVATE cpr)
-target_include_directories(icarus_lib PRIVATE ${JWT_CPP_INCLUDE_DIRS})
 target_link_libraries(icarus_lib PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
 target_link_libraries(icarus_lib PRIVATE cryptopp-static)
-# target_link_libraries(icarus_lib PRIVATE ${MYSQL_LIBRARIES})
-# target_link_libraries(icarus_lib PRIVATE soci_core soci_mysql)
 target_link_libraries(icarus_lib PRIVATE unofficial::libmariadb tag)
 # target_link_libraries(icarus_lib PRIVATE tag taglib)
 

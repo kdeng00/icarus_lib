@@ -7,9 +7,9 @@
 #include <vector>
 
 
-// #include "icarus_lib/icarus.hpp"
+#include "icarus_lib/icarus.hpp"
 
-// using icarus_lib::conn_string;
+using icarus_lib::conn_string;
 
 using namespace std;
 

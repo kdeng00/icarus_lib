@@ -38,6 +38,7 @@ using genre = models::genre_type<song, str_val, int_val>;
 // using year = year_type<int_val>;
 using cover = models::cover_type<song, str_val, int_val, raw_data>;
 using cover_art = models::cover_type<song, str_val, int_val, raw_data>;
+using coverart = models::cover_type<song, std::string, int, raw_data>;
 
 using token = models::token_mod<str_val, int_val, std::chrono::system_clock::time_point>;
 using login_result = models::login_result_type<str_val, int_val>;
@@ -66,14 +67,14 @@ using token_filter = types::token_filter;
 
 using path_type = types::path_type;
 
-using album_repository = database::album_repository<album, album_filter>;
+using album_repository = database::album_repository;
 using base_repository = database::base_repository;
-using artist_repository = database::artist_repository<artist, artist_filter>;
-using cover_art_repository = database::cover_art_repository<cover_art, cover_filter>;
-using genre_repository = database::genre_repository<genre, genre_filter>;
-using song_repository = database::song_repository<song, song_filter>;
+using artist_repository = database::artist_repository;
+using cover_art_repository = database::cover_art_repository;
+using genre_repository = database::genre_repository;
+using song_repository = database::song_repository;
 // using token_repository = repositories::database::cloud::token_repository<token, token_filter>;
-using token_repository = database::token_repository<token, token_filter>;
+using token_repository = database::token_repository;
 using user_repository = database::user_repository;
 
 using directory_manager = manager::directory_manager;

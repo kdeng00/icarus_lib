@@ -22,6 +22,8 @@ using genre = genre_type<song, std::string, int>;
 // TODO: Will not be used
 // using year = year_type<int>;
 using cover = cover_type<song, std::string, int, raw_data>;
+using cover_art = cover_type<song, std::string, int, raw_data>;
+using coverart = cover_type<song, std::string, int, raw_data>;
 
 using token = token_mod<std::string, int, std::chrono::system_clock::time_point>;
 using login_result = login_result_type<std::string, int>;
