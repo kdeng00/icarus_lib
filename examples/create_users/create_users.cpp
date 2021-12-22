@@ -22,6 +22,8 @@ user test_user(const string firstname = "David", const string lastname = "Bowie"
     usr.password = password;
     usr.email = email;
     usr.phone = phone;
+    usr.datecreated = icarus_lib::general_utility::covert_time_point_to_time_str<std::chrono::system_clock::time_point, string>();
+    cout << usr.datecreated << "\n";
 
     return usr;
 }
@@ -48,6 +50,8 @@ int main(int argc, char **argv)
 
     user_repo.saveUserRecord(usr);
     usr = user_repo.retrieveUserRecord(usr, icarus_lib::user_filter::USERNAME);
+    cout << "Username: " << usr.username << " id " << usr.id << " ";
+    cout << "User created: " << usr.datecreated << "\n";
 
     auto slt = test_salt(usr.id);
     user_repo.saveUserSalt(slt);

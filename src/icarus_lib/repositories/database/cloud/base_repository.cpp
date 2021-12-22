@@ -67,15 +67,19 @@ void base_repository::initialize_base(const models::binary_path &bConf)
 
 MYSQL * base_repository::setup_connection()
 {
-    MYSQL *conn = ::mysql_init(nullptr);
+    auto conn = mysql_init(nullptr);
     const auto server = details.host.c_str();
     const auto database = details.database.c_str();
     const auto username = details.username.c_str();
     const auto password = details.password.c_str();
 
-    if(!::mysql_real_connect(conn, server, username, password, database, 0, nullptr, 0))
+    // std::cout << this->generate_connection_string() << "\n";
+
+    if(!mysql_real_connect(conn, details.host.c_str(), details.username.c_str(), 
+        details.password.c_str(), details.database.c_str(), 0, nullptr, 0))
     {
-        std::cout << "Failed to connect to the database\n";
+        fprintf(stderr, "Failed to connect to database: Error: %s\n",
+        mysql_error(conn));
     }
 
     return conn;

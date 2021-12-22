@@ -157,6 +157,18 @@ public:
         return nlohmann::json::parse(contentOfPath(path));
     }
 
+    static nlohmann::json raw_database_config_content(const std::string_view path)
+    {
+        auto p = std::filesystem::path(path);
+        auto full_path = p.string();
+        std::cout << "full path: " << full_path << "\n";
+
+        auto content = contentOfPath(full_path);
+
+        return nlohmann::json::parse(content);
+    }
+
+
     template<typename json = nlohmann::json,
                 typename config_t = models::binary_path>
     static json keyConfigContent(const config_t &config)

@@ -1,6 +1,8 @@
 #ifndef USERREPOSITORY_H_
 #define USERREPOSITORY_H_
 
+#include <tuple>
+
 #include "icarus_lib/repositories/database/cloud/base_repository.h"
 #include "icarus_lib/repositories/database/cloud/repository_utility.h"
 #include "icarus_lib/types/types.hpp"
@@ -15,10 +17,13 @@ struct UserLengths {
     unsigned long emailLength;
     unsigned long usernameLength;
     unsigned long passwordLength;
+    unsigned long date_created_length;
 };
 struct SaltLengths {
     unsigned long saltLength;
 };
+
+
 
 
 class user_repository : public base_repository
@@ -26,6 +31,9 @@ class user_repository : public base_repository
 public:
     user_repository(const models::conn_string &conn_str, const std::string table = "User");
     user_repository(const models::binary_path &conn_str, const std::string table = "User");
+
+
+    using user_values = std::tuple<char *, char *, char *, char *, char *, char *, MYSQL_TIME> ;
 
 
     models::user retrieveUserRecord(models::user &usr, types::user_filter filter);
@@ -222,17 +230,21 @@ private:
     std::shared_ptr<MYSQL_BIND> insertSaltValues(const models::pass_sec &passSec, 
             std::shared_ptr<SaltLengths> lengths);
 
-    std::shared_ptr<MYSQL_BIND> valueBind(models::user &user, 
-            std::tuple<char*, char*, char*, char*, char*, char*> &us);
+    std::shared_ptr<MYSQL_BIND> valueBind(models::user &user, user_values &us);
     std::shared_ptr<MYSQL_BIND> saltValueBind(models::pass_sec &userSalt, char *salt);
     std::shared_ptr<UserLengths> fetchUserLengths(const models::user &user);
     std::shared_ptr<SaltLengths> fetchSaltLengths(const models::pass_sec &pass_sec);
 
-    std::tuple<char*, char*, char*, char*, char*, char*> fetchUV();
+    // std::tuple<char*, char*, char*, char*, char*, char*, char *> fetchUV();
+    user_values fetchUV();
 
     models::user parseRecord(MYSQL_STMT *stmt);
 
     models::pass_sec parseSaltRecord(MYSQL_STMT *stmt);
+
+    my_bool m_is_null;
+    my_bool m_error;
+    unsigned long m_str_length;
 };
 
 }

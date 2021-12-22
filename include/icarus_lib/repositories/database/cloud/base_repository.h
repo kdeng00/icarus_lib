@@ -47,14 +47,11 @@ protected:
 
 
     models::conn_string details;
-    // models::binary_path m_bConf;
     models::binary_path m_bConf;
     std::string table_name;
 
     void initialize_base(const models::binary_path &bConf);
-
 private:
-
     std::string path;
 };
 

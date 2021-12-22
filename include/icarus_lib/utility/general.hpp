@@ -25,6 +25,16 @@ public:
 
         return std::chrono::system_clock::from_time_t(time_t_val);
     }
+
+    template<typename time_point_type, typename str_val>
+    static str_val covert_time_point_to_time_str(time_point_type currentTime = std::chrono::system_clock::now())
+    {
+        auto time_val = convert_time_point_to_tm<time_point_type, std::tm>(currentTime);
+        char buffer[1024];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H-%M-%S", &time_val);
+
+        return str_val(buffer);
+    }
 };
 
 }

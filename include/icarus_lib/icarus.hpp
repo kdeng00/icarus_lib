@@ -20,6 +20,7 @@
 #include "icarus_lib/repositories/database/cloud/token_repository.hpp"
 #include "icarus_lib/repositories/database/cloud/user_repository.hpp"
 
+#include "icarus_lib/utility/general.hpp"
 #include "icarus_lib/utility/metadata_retriever.hpp"
 #include "icarus_lib/utility/image_file.hpp"
 
@@ -79,6 +80,7 @@ using user_repository = database::user_repository;
 
 using directory_manager = manager::directory_manager;
 
+using general_utility = utility::general;
 using metadata_retriever = utility::metadata_retriever;
 using image_file = utility::image_file;
 

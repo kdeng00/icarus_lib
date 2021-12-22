@@ -9,17 +9,21 @@ public:
     token_mod() = default;
     token_mod(const str_val &access_token) :
             access_token(access_token) { }
+    /**
     token_mod(const str_val &access_token, const str_val &token_type, 
             const int_val expiration) :
             access_token(access_token), token_type(token_type), 
             expiration(expiration) { }
+    */
 
     int_val token_id;
     str_val access_token;
-    int_val expiration;
+    // int_val expiration;
     str_val token_type;
-    time_p issued;
-    time_p expires;
+    // time_p issued;
+    // time_p expires;
+    str_val issued;
+    str_val expires;
     bool refresh_token;
     bool active;
     int_val user_id;
@@ -71,7 +75,7 @@ public:
     str_val username;
     str_val password;
     // TODO: New fields. No columns have been created in the DB table
-    str_val datecrated;
+    str_val datecreated;
 };
 
 template<typename str_val, typename int_val>
