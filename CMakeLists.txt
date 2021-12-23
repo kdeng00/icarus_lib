@@ -51,7 +51,8 @@ set(SOURCES
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/genre_repository.cpp
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/song_repository.cpp
     ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/token_repository.cpp
-    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/user_repository.cpp)
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/repositories/database/cloud/user_repository.cpp
+    ${ICARUS_LIB_ROOT}/src/icarus_lib/utility/password_encryption.cpp)
 
 
 # include_directories(${CMAKE_CURRENT_LIST_DIR}/include/3rdparty/soci/include)

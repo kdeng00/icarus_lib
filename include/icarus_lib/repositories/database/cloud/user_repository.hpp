@@ -10,18 +10,6 @@
 namespace icarus_lib::database {
 
 
-struct UserLengths {
-    unsigned long firstnameLength;
-    unsigned long lastnameLength;
-    unsigned long phoneLength;
-    unsigned long emailLength;
-    unsigned long usernameLength;
-    unsigned long passwordLength;
-    unsigned long date_created_length;
-};
-struct SaltLengths {
-    unsigned long saltLength;
-};
 
 
 
@@ -35,6 +23,19 @@ public:
 
     using user_values = std::tuple<char *, char *, char *, char *, char *, char *, MYSQL_TIME> ;
 
+    struct UserLengths {
+        unsigned long firstnameLength;
+        unsigned long lastnameLength;
+        unsigned long phoneLength;
+        unsigned long emailLength;
+        unsigned long usernameLength;
+        unsigned long passwordLength;
+        unsigned long date_created_length;
+    };
+    struct SaltLengths {
+        unsigned long saltLength;
+    };
+
 
     models::user retrieveUserRecord(models::user &usr, types::user_filter filter);
     models::pass_sec retrieverUserSaltRecord(models::pass_sec &userSec, types::salt_filter filter)
@@ -43,16 +44,22 @@ public:
         auto conn = this->setup_connection();
         auto stmt = ::mysql_stmt_init(conn);
 
-        qry << "SELECT * FROM Salt WHERE ";
+        qry << "SELECT SaltId, Salt, UserId FROM " << this->table_name << " WHERE ";
 
-        auto params = this->mysql_bind_init(1);
+        auto params = this->mysql_bind_init(3);
 
         switch (filter) {
         case types::salt_filter::ID:
+            qry << "SaltId = ?";
+
+            repository_utility::construct_param_long(params, MYSQL_TYPE_LONG, userSec.id, 0);
+            break;
+        case types::salt_filter::USER_ID:
+        {
             qry << "UserId = ?";
 
             repository_utility::construct_param_long(params, MYSQL_TYPE_LONG, userSec.user_id, 0);
-            break;
+        }
         default:
             break;
         }

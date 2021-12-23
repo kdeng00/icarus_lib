@@ -21,8 +21,9 @@
 #include "icarus_lib/repositories/database/cloud/user_repository.hpp"
 
 #include "icarus_lib/utility/general.hpp"
-#include "icarus_lib/utility/metadata_retriever.hpp"
 #include "icarus_lib/utility/image_file.hpp"
+#include "icarus_lib/utility/metadata_retriever.hpp"
+#include "icarus_lib/utility/password_encryption.hpp"
 
 namespace icarus_lib
 {
@@ -83,6 +84,7 @@ using directory_manager = manager::directory_manager;
 using general_utility = utility::general;
 using metadata_retriever = utility::metadata_retriever;
 using image_file = utility::image_file;
+using password_encryption = utility::password_encryption;
 
 };
 

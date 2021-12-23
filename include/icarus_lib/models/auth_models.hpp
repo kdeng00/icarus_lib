@@ -9,19 +9,10 @@ public:
     token_mod() = default;
     token_mod(const str_val &access_token) :
             access_token(access_token) { }
-    /**
-    token_mod(const str_val &access_token, const str_val &token_type, 
-            const int_val expiration) :
-            access_token(access_token), token_type(token_type), 
-            expiration(expiration) { }
-    */
 
     int_val token_id;
     str_val access_token;
-    // int_val expiration;
     str_val token_type;
-    // time_p issued;
-    // time_p expires;
     str_val issued;
     str_val expires;
     bool refresh_token;

@@ -25,11 +25,12 @@ int main(int argc, char **argv)
 
     cout << "Username: " << usr.username << "\n";
 
+
     auto salt = icarus_lib::pass_sec();
     salt.user_id = usr.id;
-    salt = user_repo.retrieverUserSaltRecord(salt, salt_filter::ID);
+    salt = user_repo.retrieverUserSaltRecord(salt, salt_filter::USER_ID);
 
-    cout << "Salt: " << salt.salt << "\n";
+    cout << "Salt ID: " << salt.id << " user id: " << salt.user_id << "\n";
 
 
     return 0;

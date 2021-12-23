@@ -13,7 +13,7 @@ using pass_sec = icarus_lib::pass_sec;
 
 user test_user(const string firstname = "David", const string lastname = "Bowie",
     const string email = "kdeedeng@yahoo.com", const string phone = "999-333-2321",
-    const string username = "dbowie84", const string password = "thisisatest") noexcept
+    const string username = "dbowie84", const string password = "maybethiswill435342!") noexcept
 {
     icarus_lib::user usr;
     usr.firstname = firstname;
@@ -28,13 +28,16 @@ user test_user(const string firstname = "David", const string lastname = "Bowie"
     return usr;
 }
 
-pass_sec test_salt(const int user_id,
-    const string some_salt = "$dkngv.enierunfeic") noexcept
+pass_sec test_salt(const icarus_lib::user &user) noexcept
 {
-    auto salt = icarus_lib::pass_sec();
-    salt.salt = some_salt;
-    salt.hash_password = some_salt;
-    salt.user_id = user_id;
+    icarus_lib::utility::password_encryption pass_encyrpt;
+    const auto salt = pass_encyrpt.hash_password(user);
+    const auto password = user.password;
+    const auto hashed = pass_encyrpt.hash_password(user);
+    const auto equal = pass_encyrpt.is_password_valid(user, salt);
+    cout << "hashed " << hashed.hash_password << " ";
+
+    cout << "Hash matches " << equal << "\n";
 
     return salt;
 }
@@ -50,10 +53,8 @@ int main(int argc, char **argv)
 
     user_repo.saveUserRecord(usr);
     usr = user_repo.retrieveUserRecord(usr, icarus_lib::user_filter::USERNAME);
-    cout << "Username: " << usr.username << " id " << usr.id << " ";
-    cout << "User created: " << usr.datecreated << "\n";
 
-    auto slt = test_salt(usr.id);
+    auto slt = test_salt(usr);
     user_repo.saveUserSalt(slt);
 
     return 0;
